@@ -70,13 +70,13 @@ to download if you want the latest one
 # CHANGELOG
 
 ## 1.5.0.0
--The Console now has a UI with the following functions:
-    -Start and Stop the Telegram Bot
-    -Show the current confs
-    -Reload the configs
-    -Show status from the System
-    -Show all Logs and with Filter Options
-    -Quit the bot, but also with ctrl c
+- The Console now has a UI with the following functions:
+    - Start and Stop the Telegram Bot
+    - Show the current confs
+    - Reload the configs
+    - Show status from the System
+    - Show all Logs and with Filter Options
+    - Quit the bot, but also with ctrl c
 
 ## 1.0.0.0
 - The bot can run on Linux and Windows<br/>
