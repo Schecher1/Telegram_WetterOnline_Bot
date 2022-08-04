@@ -1,12 +1,11 @@
 ﻿# Telegram-WetterOnline-Bot
 
+## Important!
+The bot text you in english and was "programmed in english", but the WetterOnline API runs only over DEU and ITA, that means you don't get weather data in english! So do not be surprised if the bot sends you German weather data, so the image then contains German words!
 
 ## Application description:
 
-With this application you can easily create your own Minecraft server. 
-No matter whether for Windows or Linux. It is preconfigured so that you can simply start the server. 
-It can be reached under "localhost" or, if necessary, on your server IP. 
-(Don't forget to open the ports if you want to play with friends). 
+This bot runs over the "unofficial" API of WetterOnline, a german weather data service. For this purpose the converter ConvertApi is used to convert html code to png.
 
 
 ## How to Download:
@@ -14,7 +13,8 @@ It can be reached under "localhost" or, if necessary, on your server IP.
 Go to the "Releases" and download any version.
 Or <br/>
 [press here to download for windows](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.0.0.0/Telegram_WetterOnline_Bot-WindowsX64.zip) <br/>
-[press here to download for linux](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.0.0.0/Telegram_WetterOnline_Bot-LinuxX64.zip)<br/>
+[press here to download for linux (zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.0.0.0/Telegram_WetterOnline_Bot-LinuxX64.zip)<br/>
+[press here to download for linux (tar xz)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.0.0.0/Telegram_WetterOnline_Bot-LinuxX64.tar.xz)<br/>
 to download if you want the latest one
 
 
