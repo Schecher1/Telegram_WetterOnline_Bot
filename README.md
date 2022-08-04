@@ -12,9 +12,9 @@ This bot runs over the "unofficial" API of WetterOnline, a german weather data s
 
 Go to the "Releases" and download any version.
 Or <br/>
-[press here to download for windows](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.0.0.0/Telegram_WetterOnline_Bot-WindowsX64.zip) <br/>
-[press here to download for linux (zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.0.0.0/Telegram_WetterOnline_Bot-LinuxX64.zip)<br/>
-[press here to download for linux (tar xz)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.0.0.0/Telegram_WetterOnline_Bot-LinuxX64.tar.xz)<br/>
+[press here to download for windows](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.0/Telegram_WetterOnline_Bot-WindowsX64.zip) <br/>
+[press here to download for linux (zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.0/Telegram_WetterOnline_Bot-LinuxX64.zip)<br/>
+[press here to download for linux (tar xz)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.0/Telegram_WetterOnline_Bot-LinuxX64.tar.xz)<br/>
 to download if you want the latest one
 
 
@@ -35,6 +35,15 @@ to download if you want the latest one
 
 ### Telegram Weather Picture:
 ![Telegram-Weather-Picture](IMAGES/Version%201.0.0.0/TelegramWeatherPicture.png)
+
+### Console UI:
+![Console-UI](IMAGES/Version%201.5.0.0/ConsoleUI_UI.PNG)
+
+### Console All Logs:
+![Console-All-Logs](IMAGES/Version%201.5.0.0/ConsoleUI_Log_All.PNG)
+
+### Console Log Filter:
+![Console-Log-Filter](IMAGES/Version%201.5.0.0/ConsoleUI_Log_Err.PNG)
 
 
 ## Process description:
@@ -59,6 +68,15 @@ to download if you want the latest one
 
 
 # CHANGELOG
+
+## 1.5.0.0
+-The Console now has a UI with the following functions:
+    -Start and Stop the Telegram Bot
+    -Show the current confs
+    -Reload the configs
+    -Show status from the System
+    -Show all Logs and with Filter Options
+    -Quit the bot, but also with ctrl c
 
 ## 1.0.0.0
 - The bot can run on Linux and Windows<br/>
