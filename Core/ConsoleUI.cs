@@ -112,7 +112,9 @@
         private static void ReloadConfigFile()
         {
             cls();
-
+            TelegramBot.StopRM();
+            Config.InitConfigFile();
+            TelegramBot.StartRM();
         }
 
         //Not done

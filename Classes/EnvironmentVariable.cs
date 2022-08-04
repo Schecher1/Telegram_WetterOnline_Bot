@@ -13,6 +13,6 @@
         public static readonly string WETTERONLINE_API_LANGUAGE = "de";
         public static readonly string WETTERONLINE_API_FORMAT = "json";
         public static readonly string WETTERONLINE_API_LAYOUT = "FC3";
-        public static readonly string CONVERT_API_HOST = @"https://v2.convertapi.com/convert/html/to/png?Secret=kQT5N0aMacIn4W4a";
+        public static readonly string CONVERT_API_HOST = @$"https://v2.convertapi.com/convert/html/to/png?Secret={CONVERT_API_TOKEN}";
     }
 }
