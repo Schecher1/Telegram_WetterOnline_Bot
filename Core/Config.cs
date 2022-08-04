@@ -58,7 +58,7 @@
                 Telegrambot_ID_Whitelist = new int[] { 000000000 }
             };
 
-            File.WriteAllText(@"data/config.json", JsonConvert.SerializeObject(config));
+            File.WriteAllText(@"data/config.json", JsonConvert.SerializeObject(config, Formatting.Indented));
 
             Logger.Log(Logger.LogLevel.Successful, "Config-Manager", "The config file has been generated. Please complete the file and start the bot again (Path: data/config.json)");
         }

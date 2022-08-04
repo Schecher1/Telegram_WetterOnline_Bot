@@ -21,8 +21,4 @@
         public string? url { get; set; }
         public string? match { get; set; }
     }
-
 }
-
-
-

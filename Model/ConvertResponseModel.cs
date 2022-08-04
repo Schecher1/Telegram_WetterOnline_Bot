@@ -5,6 +5,7 @@
         public int ConversionCost { get; set; }
         public FileRes[] Files { get; set; }
     }
+    
     public class FileRes
     {
         public string FileName { get; set; }

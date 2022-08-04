@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Telegram_WetterOnline_Bot.Model
+﻿namespace Telegram_WetterOnline_Bot.Model
 {
     public class AutoSuggestModel
     {
