@@ -16,14 +16,7 @@
 
             bot.Start();
 
-            //console ui, for log, start, edit file, etc.
-            //comes in a separate version
-            while (isRunning)
-            {
-                if (Console.ReadLine() == "q")
-                    isRunning = false;
-
-            }
+            ConsoleUI.StartConsole();
         }
     }
 }
