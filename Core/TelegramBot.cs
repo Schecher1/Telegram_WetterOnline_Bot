@@ -30,9 +30,16 @@ namespace Telegram_WetterOnline_Bot.Core
         public static void StopRM()
         {
             //the bot no longer accepts messages
-            _client.StopReceiving();
-            Logger.Log(Logger.LogLevel.Successful, "Telegram-Bot", "Has been stopped!");
-            Logger.Log(Logger.LogLevel.Warning, "Telegram-Bot", "Do not receive any more messages!");
+            try
+            {
+                _client.StopReceiving();
+                Logger.Log(Logger.LogLevel.Successful, "Telegram-Bot", "Has been stopped!");
+                Logger.Log(Logger.LogLevel.Warning, "Telegram-Bot", "Do not receive any more messages!");
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(Logger.LogLevel.Error, "Telegram-Bot", ex.Message);
+            }
         }
 
         private void Client_OnMessage(object? sender, Telegram.Bot.Args.MessageEventArgs e)

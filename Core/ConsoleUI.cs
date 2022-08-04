@@ -50,6 +50,14 @@
                         ShowsAllSuccessfulLogs();
                         break;
 
+                    case "inflogs":
+                        ShowsAllInfoLogs();
+                        break;
+
+                    case "dbglogs":
+                        ShowsAllDebugLogs();
+                        break;
+
                     case "q":
                         isRunning = false;
                         break;
@@ -71,6 +79,8 @@
             Console.WriteLine($"errlogs   =>   Shows all Error logs");
             Console.WriteLine($"warlogs   =>   Shows all Warning logs");
             Console.WriteLine($"scslogs   =>   Shows all Successful logs");
+            Console.WriteLine($"inflogs   =>   Shows all Info logs");
+            Console.WriteLine($"dbglogs   =>   Shows all Debug logs");
             Console.WriteLine($"q         =>   Stop the Bot");
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             Console.Write(">");
@@ -81,19 +91,11 @@
 
         //done
         private static void StartReviceMessages()
-        {
-            cls();
-            TelegramBot.StartRM();
-            Console.ReadLine();
-        }
+            => TelegramBot.StartRM();
 
         //done
         private static void StopReviceMessages()
-        {
-            cls();
-            TelegramBot.StopRM();
-            Console.ReadLine();
-        }
+            => TelegramBot.StopRM();
 
         //Not done
         private static void ShowTheCurrentConfigs()
@@ -116,32 +118,85 @@
 
         }
 
-        //Not done
         private static void ShowTheLogTerminal()
-        {
-            cls();
+            => WriteAllLogsFromList(Logger.LogLevel.All);
 
-        }
-
-        //Not done
         private static void ShowsAllErrorLogs()
-        {
-            cls();
+            => WriteAllLogsFromList(Logger.LogLevel.Error);
 
-        }
-
-        //Not done
         private static void ShowsAllWarningLogs()
-        {
-            cls();
+            => WriteAllLogsFromList(Logger.LogLevel.Warning);
 
-        }
-
-        //Not done
         private static void ShowsAllSuccessfulLogs()
+            => WriteAllLogsFromList(Logger.LogLevel.Successful);
+
+        private static void ShowsAllInfoLogs()
+            => WriteAllLogsFromList(Logger.LogLevel.Info);
+
+        private static void ShowsAllDebugLogs()
+            => WriteAllLogsFromList(Logger.LogLevel.Debug);
+
+
+        private static void WriteAllLogsFromList(Logger.LogLevel SortLogLevel)
         {
             cls();
+            
+            if (EnvironmentVariable.SYSTEM_LOG.Count != 0)
+                foreach (LogModel log in EnvironmentVariable.SYSTEM_LOG)
+                {
+                    //sort the logs
+                    if (Logger.LogLevel.All != SortLogLevel)
+                        if (log.LogLevel != SortLogLevel)
+                            continue;
+                    
+                    //reset the font color to default
+                    Console.ResetColor();
 
+                    //write date and time
+                    Console.Write($"{log.Date}: ");
+
+                    //write log prefix
+                    switch (log.LogLevel)
+                    {
+                        case Logger.LogLevel.Debug:
+                            Console.ForegroundColor = ConsoleColor.DarkGray;
+                            break;
+                        case Logger.LogLevel.Info:
+                            Console.ForegroundColor = ConsoleColor.White;
+                            break;
+                        case Logger.LogLevel.Successful:
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            break;
+                        case Logger.LogLevel.Warning:
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            break;
+                        case Logger.LogLevel.Error:
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            break;
+                    }
+                    Console.Write($"{log.LogLevel.ToString()} ");
+
+                    //write log message prefix
+                    Console.Write($"[{log.Prefix}] ");
+
+                    //write log message
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write($"=> {log.Message}");
+
+                    //end the log
+                    Console.Write(Environment.NewLine);
+
+                    //reset the font color to default
+                    Console.ResetColor();
+                }
+
+            //So that the new logs are also displayed
+            EnvironmentVariable.SYSTEM_LogTerminalIsOpen = true;
+
+            Console.ReadKey();
+
+            //So that the new logs are no longer displayed
+            EnvironmentVariable.SYSTEM_LogTerminalIsOpen = false;
         }
     }
 }
