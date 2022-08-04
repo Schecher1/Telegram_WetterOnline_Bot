@@ -5,7 +5,7 @@
         bool isRunning = true;
         public StartUp()
             => Start();
-        private void Start()
+        private static void Start()
         {
             if (!Config.InitConfigFile())
                 return;
@@ -14,7 +14,8 @@
 
             bot.SetAPIKey(EnvironmentVariable.TELEGRAM_API_TOKEN);
 
-            bot.Start();
+            bot.Init();
+            TelegramBot.StartRM();
 
             ConsoleUI.StartConsole();
         }

@@ -13,22 +13,26 @@ namespace Telegram_WetterOnline_Bot.Core
             Logger.Log(Logger.LogLevel.Warning, "Telegram-Bot", "API Key was changed!");
         }
         
-        public void Start()
+        public void Init()
+        {
+            //the function is always called when he has received a message
+            _client.OnMessage += Client_OnMessage;
+        }
+
+        public static void StartRM()
         {
             //the bot will now accepts messages
             _client.StartReceiving();
             Logger.Log(Logger.LogLevel.Successful, "Telegram-Bot", "Has been started!");
-
-            //the function is always called when he has received a message
-            _client.OnMessage += Client_OnMessage;
             Logger.Log(Logger.LogLevel.Info, "Telegram-Bot", "Receives now messages!");
         }
         
-        public void Stop()
+        public static void StopRM()
         {
             //the bot no longer accepts messages
             _client.StopReceiving();
             Logger.Log(Logger.LogLevel.Successful, "Telegram-Bot", "Has been stopped!");
+            Logger.Log(Logger.LogLevel.Warning, "Telegram-Bot", "Do not receive any more messages!");
         }
 
         private void Client_OnMessage(object? sender, Telegram.Bot.Args.MessageEventArgs e)
