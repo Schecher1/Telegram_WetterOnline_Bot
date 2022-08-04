@@ -3,6 +3,7 @@
     public class EnvironmentVariable
     {
         public static readonly string SYSTEM_VERSION = "1.0.0.0";
+        public static List<LogModel> SYSTEM_LOG { get; set; } = new List<LogModel>();
         public static string TELEGRAM_API_TOKEN { get; set; } = String.Empty;
         public static string CONVERT_API_TOKEN { get; set; } = String.Empty;
         public static string TELEGRAMBOT_OWNER_NAME { get; set; } = String.Empty;
