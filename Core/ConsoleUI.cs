@@ -22,7 +22,7 @@
                         StopReviceMessages();
                         break;
 
-                    case "confs":
+                    case "conf":
                         ShowTheCurrentConfigs();
                         break;
 
@@ -72,7 +72,7 @@
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             Console.WriteLine($"srm+      =>   Start Revice Messages");
             Console.WriteLine($"srm-      =>   Stop Revice Messages");
-            Console.WriteLine($"confs     =>   Show the current Configs");
+            Console.WriteLine($"conf     =>   Show the current Configs");
             Console.WriteLine($"rl        =>   Reload Config File");
             Console.WriteLine($"stat      =>   Show the status");
             Console.WriteLine($"logs      =>   Show the Log-Terminal");
@@ -89,19 +89,23 @@
         private static void cls()
             => Console.Clear();
 
-        //done
         private static void StartReviceMessages()
             => TelegramBot.StartRM();
 
-        //done
         private static void StopReviceMessages()
             => TelegramBot.StopRM();
 
-        //Not done
         private static void ShowTheCurrentConfigs()
         {
             cls();
-
+            Console.WriteLine("     Configs for the Telegram Bot!");
+            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            Console.WriteLine($"Telegram_API_Token: {EnvironmentVariable.TELEGRAM_API_TOKEN}" + Environment.NewLine);
+            Console.WriteLine($"Convert_API_Token: {EnvironmentVariable.CONVERT_API_TOKEN}" + Environment.NewLine);
+            Console.WriteLine($"Telegrambot_Owner_Name: {EnvironmentVariable.TELEGRAMBOT_OWNER_NAME}" + Environment.NewLine);
+            Console.WriteLine($"Telegrambot_ID_Whitelist: {string.Join(", ", EnvironmentVariable.TELEGRAM_ID_WHITELIST)}");
+            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            Console.ReadKey();
         }
 
         //Not done
@@ -135,7 +139,6 @@
 
         private static void ShowsAllDebugLogs()
             => WriteAllLogsFromList(Logger.LogLevel.Debug);
-
 
         private static void WriteAllLogsFromList(Logger.LogLevel SortLogLevel)
         {
