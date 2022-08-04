@@ -70,18 +70,18 @@
             cls();
             Console.WriteLine("     Welcome to the Console UI for Telegram Bot!");
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            Console.WriteLine($"srm+      =>   Start Revice Messages");
-            Console.WriteLine($"srm-      =>   Stop Revice Messages");
-            Console.WriteLine($"conf     =>   Show the current Configs");
-            Console.WriteLine($"rl        =>   Reload Config File");
-            Console.WriteLine($"stat      =>   Show the status");
-            Console.WriteLine($"logs      =>   Show the Log-Terminal");
-            Console.WriteLine($"errlogs   =>   Shows all Error logs");
-            Console.WriteLine($"warlogs   =>   Shows all Warning logs");
-            Console.WriteLine($"scslogs   =>   Shows all Successful logs");
-            Console.WriteLine($"inflogs   =>   Shows all Info logs");
-            Console.WriteLine($"dbglogs   =>   Shows all Debug logs");
-            Console.WriteLine($"q         =>   Stop the Bot");
+            Console.WriteLine($"srm+        =>   Start Revice Messages");
+            Console.WriteLine($"srm-        =>   Stop Revice Messages");
+            Console.WriteLine($"conf        =>   Show the current Configs");
+            Console.WriteLine($"rl          =>   Reload Config File");
+            Console.WriteLine($"stat        =>   Show the status");
+            Console.WriteLine($"logs        =>   Show the Log-Terminal");
+            Console.WriteLine($"errlogs     =>   Shows all Error logs");
+            Console.WriteLine($"warlogs     =>   Shows all Warning logs");
+            Console.WriteLine($"scslogs     =>   Shows all Successful logs");
+            Console.WriteLine($"inflogs     =>   Shows all Info logs");
+            Console.WriteLine($"dbglogs     =>   Shows all Debug logs");
+            Console.WriteLine($"q           =>   Stop the Bot");
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             Console.Write(">");
         }
@@ -108,20 +108,23 @@
             Console.ReadKey();
         }
 
-        //Not done
         private static void ReloadConfigFile()
         {
             cls();
             TelegramBot.StopRM();
             Config.InitConfigFile();
             TelegramBot.StartRM();
+            Logger.Log(Logger.LogLevel.Successful, "System", "Config File reloaded!");
         }
-
-        //Not done
+        
         private static void ShowTheStatus()
         {
             cls();
-
+            Console.WriteLine("     Status from the Telegram Bot!");
+            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            Console.WriteLine($"srm telegrambot =>  {(TelegramBot._client.IsReceiving ? "Running" : "Stopped")}");
+            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            Console.ReadKey();
         }
 
         private static void ShowTheLogTerminal()

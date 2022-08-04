@@ -75,6 +75,12 @@ namespace Telegram_WetterOnline_Bot.Core
 
             string widgetLink = ConvertApi.HtmlToPng(widgetHtml);
 
+            if (widgetLink == String.Empty)
+            {
+                await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "An error has occurred, please call an Admin!");
+                return;
+            }
+
             await _client.SendPhotoAsync(e.Message.Chat.Id, widgetLink);
         }
 

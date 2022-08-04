@@ -12,4 +12,8 @@
     <PackageReference Include="Telegram.Bot" Version="16.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="IMAGES\Version 1.5.0.0\" />
+  </ItemGroup>
+
 </Project>

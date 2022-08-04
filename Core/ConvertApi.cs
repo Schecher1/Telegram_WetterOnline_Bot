@@ -24,10 +24,16 @@ namespace Telegram_WetterOnline_Bot.Core
 
             using (var content = new StringContent(param, System.Text.Encoding.UTF8, "application/json"))
             {
-                HttpResponseMessage result = client.PostAsync(EnvironmentVariable.CONVERT_API_HOST, content).Result;
+                HttpResponseMessage result = client.PostAsync(EnvironmentVariable.CONVERT_API_HOST + EnvironmentVariable.CONVERT_API_TOKEN, content).Result;
                 returnValue = result.Content.ReadAsStringAsync().Result;
             }
             Logger.Log(Logger.LogLevel.Debug, "Converter", $"Html to Png was requestet!   END     Duration:{(DateTime.Now - start).TotalSeconds} seconds");
+
+            if (returnValue.Contains("User credentials not set, secret or token must be passed."))
+            {
+                Logger.Log(Logger.LogLevel.Error, "Converter", $"Html to Png was requestet!   ERROR: {returnValue}");
+                return String.Empty;
+            }
             
             return JsonConvert.DeserializeObject<ConvertResponseModel>(returnValue).Files[^1].Url;
         }
