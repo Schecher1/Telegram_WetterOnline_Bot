@@ -7,35 +7,43 @@ namespace Telegram_WetterOnline_Bot.Core
     {
         public static string? HtmlToPng(string source)
         {
-            WebClient wc = new WebClient();
-            
-            string returnValue = String.Empty;
-
-            string widgetHtml = wc.DownloadString(source);
-
-            string widgetBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(widgetHtml));
-
-            HttpClient client = new HttpClient();
-
-            string param = GetConvertApiParams(Guid.NewGuid().ToString(), widgetBase64);
-
-            DateTime start = DateTime.Now;
-            Logger.Log(Logger.LogLevel.Debug, "Converter", $"Html to Png was requestet!   START ");
-
-            using (var content = new StringContent(param, System.Text.Encoding.UTF8, "application/json"))
+            try
             {
-                HttpResponseMessage result = client.PostAsync(EnvironmentVariable.CONVERT_API_HOST + EnvironmentVariable.CONVERT_API_TOKEN, content).Result;
-                returnValue = result.Content.ReadAsStringAsync().Result;
+                WebClient wc = new WebClient();
+
+                string returnValue = String.Empty;
+
+                string widgetHtml = wc.DownloadString(source);
+
+                string widgetBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(widgetHtml));
+
+                HttpClient client = new HttpClient();
+
+                string param = GetConvertApiParams(Guid.NewGuid().ToString(), widgetBase64);
+
+                DateTime start = DateTime.Now;
+                Logger.Log(Logger.LogLevel.Debug, "Converter", $"Html to Png was requestet!   START ");
+
+                using (var content = new StringContent(param, System.Text.Encoding.UTF8, "application/json"))
+                {
+                    HttpResponseMessage result = client.PostAsync(EnvironmentVariable.CONVERT_API_HOST + EnvironmentVariable.CONVERT_API_TOKEN, content).Result;
+                    returnValue = result.Content.ReadAsStringAsync().Result;
+                }
+                Logger.Log(Logger.LogLevel.Debug, "Converter", $"Html to Png was requestet!   END     Duration:{(DateTime.Now - start).TotalSeconds} seconds");
+
+                if (returnValue.Contains("User credentials not set, secret or token must be passed."))
+                {
+                    Logger.Log(Logger.LogLevel.Error, "Converter", $"Html to Png was requestet!   ERROR: {returnValue}");
+                    return String.Empty;
+                }
+
+                return JsonConvert.DeserializeObject<ConvertResponseModel>(returnValue).Files[^1].Url;
             }
-            Logger.Log(Logger.LogLevel.Debug, "Converter", $"Html to Png was requestet!   END     Duration:{(DateTime.Now - start).TotalSeconds} seconds");
-
-            if (returnValue.Contains("User credentials not set, secret or token must be passed."))
+            catch (Exception ex)
             {
-                Logger.Log(Logger.LogLevel.Error, "Converter", $"Html to Png was requestet!   ERROR: {returnValue}");
+                Logger.Log(Logger.LogLevel.Error, "Converter", $"Html to Png was requestet!   ERROR: {ex.Message}");
                 return String.Empty;
             }
-            
-            return JsonConvert.DeserializeObject<ConvertResponseModel>(returnValue).Files[^1].Url;
         }
 
         private static string GetConvertApiParams(string filename, string widgetBase64)

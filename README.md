@@ -68,6 +68,10 @@ to download if you want the latest one
 
 # CHANGELOG
 
+## 1.5.0.2
+- A NULL exception was found and fixed (wetteronline)
+- Some missing Try Catch was added. (more will be added soon)
+
 ## 1.5.0.1
 - A NULL exception was found and fixed (convertAPI)
 - The log folder was named logs, reason: logic

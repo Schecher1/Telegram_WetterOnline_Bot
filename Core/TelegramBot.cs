@@ -60,28 +60,35 @@ namespace Telegram_WetterOnline_Bot.Core
 
         private async void SendWidget(object? sender, Telegram.Bot.Args.MessageEventArgs e)
         {
-            string rawMessage = e.Message.Text;
-            
-            LocationModel? locationData = WetterOnline.GetLocationData(rawMessage.Split("<=>")[1]);
-
-            //can happend if the separator contains in the text, watch at the top "split"
-            if (locationData is null)
+            try
             {
-                await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "An error has occurred, your input was incorrect");
-                return;
+                string rawMessage = e.Message.Text;
+
+                LocationModel? locationData = WetterOnline.GetLocationData(rawMessage.Split("<=>")[1]);
+
+                //can happend if the separator contains in the text, watch at the top "split"
+                if (locationData is null)
+                {
+                    await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "An error has occurred, your input was incorrect");
+                    return;
+                }
+
+                string widgetHtml = WetterOnline.GetWidgetLink(locationData.geoID, locationData.locationName);
+
+                string widgetLink = ConvertApi.HtmlToPng(widgetHtml);
+
+                if (widgetLink == String.Empty || widgetLink is null)
+                {
+                    await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "An error has occurred, please call an Admin!");
+                    return;
+                }
+
+                await _client.SendPhotoAsync(e.Message.Chat.Id, widgetLink);
             }
-
-            string widgetHtml = WetterOnline.GetWidgetLink(locationData.geoID, locationData.locationName);
-
-            string widgetLink = ConvertApi.HtmlToPng(widgetHtml);
-            
-            if (widgetLink == String.Empty || widgetLink is null)
+            catch (Exception ex)
             {
-                await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "An error has occurred, please call an Admin!");
-                return;
+                Logger.Log(Logger.LogLevel.Error, "TelegramBot", $"Send Widget was requestet!   ERROR: {ex.Message}");
             }
-
-            await _client.SendPhotoAsync(e.Message.Chat.Id, widgetLink);
         }
 
         private async void SendSuggest(object? sender, Telegram.Bot.Args.MessageEventArgs e)
