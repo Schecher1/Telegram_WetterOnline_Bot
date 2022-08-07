@@ -69,6 +69,10 @@ to download if you want the latest one
 
 # CHANGELOG
 
+## 1.5.0.1
+-A NULL exception was found and fixed (convertAPI)
+-The log folder was named logs, reason: logic
+
 ## 1.5.0.0
 -The Console now has a UI with the following functions:
     -Start and Stop the Telegram Bot
@@ -79,7 +83,7 @@ to download if you want the latest one
     -Quit the bot, but also with ctrl c
 
 ## 1.0.0.0
-- The bot can run on Linux and Windows<br/>
-- The bot keeps a log file with history<br/>
-- The bot can give you locations suggestions<br/>
-- The bot sends your weather data as a image<br/>
+- The bot can run on Linux and Windows
+- The bot keeps a log file with history
+- The bot can give you locations suggestions
+- The bot sends your weather data as a image
