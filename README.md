@@ -70,8 +70,8 @@ to download if you want the latest one
 # CHANGELOG
 
 ## 1.5.0.1
--A NULL exception was found and fixed (convertAPI)
--The log folder was named logs, reason: logic
+- A NULL exception was found and fixed (convertAPI)
+- The log folder was named logs, reason: logic
 
 ## 1.5.0.0
 - The Console now has a UI with the following functions:
