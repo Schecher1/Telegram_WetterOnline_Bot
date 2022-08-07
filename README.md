@@ -13,7 +13,6 @@ This bot runs over the "unofficial" API of WetterOnline, a german weather data s
 Go to the "Releases" and download any version.
 Or <br/>
 [press here to download for windows](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.0/Telegram_WetterOnline_Bot-WindowsX64.zip) <br/>
-[press here to download for linux (zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.0/Telegram_WetterOnline_Bot-LinuxX64.zip)<br/>
 [press here to download for linux (tar xz)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.0/Telegram_WetterOnline_Bot-LinuxX64.tar.xz)<br/>
 to download if you want the latest one
 
