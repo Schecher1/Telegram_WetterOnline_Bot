@@ -74,8 +74,8 @@ namespace Telegram_WetterOnline_Bot.Core
             string widgetHtml = WetterOnline.GetWidgetLink(locationData.geoID, locationData.locationName);
 
             string widgetLink = ConvertApi.HtmlToPng(widgetHtml);
-
-            if (widgetLink == String.Empty)
+            
+            if (widgetLink == String.Empty || widgetLink is null)
             {
                 await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "An error has occurred, please call an Admin!");
                 return;

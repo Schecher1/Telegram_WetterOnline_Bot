@@ -5,7 +5,7 @@ namespace Telegram_WetterOnline_Bot.Core
 {
     public class ConvertApi
     {
-        public static string HtmlToPng(string source)
+        public static string? HtmlToPng(string source)
         {
             WebClient wc = new WebClient();
             

@@ -83,15 +83,15 @@
             if (!Directory.Exists(@"data"))
                 Directory.CreateDirectory(@"data");
             
-            if (!Directory.Exists(@"data/log"))
-                Directory.CreateDirectory(@"data/log");
+            if (!Directory.Exists(@"data/logs"))
+                Directory.CreateDirectory(@"data/logs");
 
             //Add the log to the file
             try
             {
                 await File.AppendAllTextAsync
                 (
-                    @$"data/log/log_from_{DateTime.Now.ToString("dd_MM_yyyy")}.txt",
+                    @$"data/logs/log_from_{DateTime.Now.ToString("dd_MM_yyyy")}.txt",
                     $"{DateTime.Now}: {logLevelPrefix} [{logPrefix}] => {logMessage} {Environment.NewLine}"
                 );
             }
