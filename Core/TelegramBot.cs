@@ -55,7 +55,7 @@ namespace Telegram_WetterOnline_Bot.Core
                 
                 if (e.Message.Text is null)
                 {
-                    Logger.Log(Logger.LogLevel.Warning, "Telegram-Bot", $"The Message from {e.Message.Chat.Id} is null!");
+                    Logger.Log(Logger.LogLevel.Info, "Telegram-Bot", $"The Message from {e.Message.Chat.Id} is null!");
                     _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "An error has occurred, your input was incorrect");
                     return;
                 }
