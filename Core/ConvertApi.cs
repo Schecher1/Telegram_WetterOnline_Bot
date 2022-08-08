@@ -41,7 +41,8 @@ namespace Telegram_WetterOnline_Bot.Core
             }
             catch (Exception ex)
             {
-                Logger.Log(Logger.LogLevel.Error, "Converter", $"Html to Png was requestet!   ERROR: {ex.Message}");
+                Logger.Log(Logger.LogLevel.Error, "Converter", $"Html to Png was requestet!   Short ERROR: {ex.Message}");
+                Logger.Log(Logger.LogLevel.Error, "Converter", $"Html to Png was requestet!   Long ERROR: {ex}");
                 return String.Empty;
             }
         }
