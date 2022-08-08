@@ -44,18 +44,31 @@ namespace Telegram_WetterOnline_Bot.Core
 
         private void Client_OnMessage(object? sender, Telegram.Bot.Args.MessageEventArgs e)
         {
-            //check if the user is in the whitelist
-            if (!EnvironmentVariable.TELEGRAM_ID_WHITELIST.Contains(Convert.ToInt32(e.Message.Chat.Id)))
-            { 
-                YouAreNotOnTheWhitelist(sender, e); 
-                return; 
-            }
+            try
+            {
+                //check if the user is in the whitelist
+                if (!EnvironmentVariable.TELEGRAM_ID_WHITELIST.Contains(Convert.ToInt32(e.Message.Chat.Id)))
+                {
+                    YouAreNotOnTheWhitelist(sender, e);
+                    return;
+                }
+                
+                if (e.Message.Text is null)
+                {
+                    Logger.Log(Logger.LogLevel.Warning, "Telegram-Bot", $"The Message from {e.Message.Chat.Id} is null!");
+                    _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "An error has occurred, your input was incorrect");
+                }
 
-            //tempary, is crappy but i know
-            if (e.Message.Text.Contains("<=>"))
-                SendWidget(sender, e);
-            else
-                SendSuggest(sender, e);
+                //tempary, is crappy but i know
+                if (e.Message.Text.Contains("<=>"))
+                    SendWidget(sender, e);
+                else
+                    SendSuggest(sender, e);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(Logger.LogLevel.Error, "Telegram-Bot", ex.Message);
+            }
         }
 
         private async void SendWidget(object? sender, Telegram.Bot.Args.MessageEventArgs e)

@@ -5,7 +5,7 @@
         //only for the wetteronline api, not for the other apis!
         public static string HttpGet(string query)
         {
-            Logger.Log(Logger.LogLevel.Debug, "HttpRequestManager", $"Http Request Query: {query}");
+            Logger.Log(Logger.LogLevel.Debug, "HttpRequest-Manager", $"Http Request Query: {query}");
 
             HttpClient client = new();
 
@@ -18,7 +18,7 @@
             //Take only the Result, without the other data
             var json = result.Content.ReadAsStringAsync().Result;
 
-            Logger.Log(Logger.LogLevel.Debug, "HttpRequestManager", $"Http Request  result: {json}");
+            Logger.Log(Logger.LogLevel.Debug, "HttpRequest-Manager", $"Http Request  result: {json}");
 
             //Return the result
             return json;

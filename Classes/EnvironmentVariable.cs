@@ -2,7 +2,7 @@
 {
     public class EnvironmentVariable
     {
-        public static readonly string SYSTEM_VERSION = "1.5.0.4";
+        public static readonly string SYSTEM_VERSION = "1.5.0.5";
         public static List<LogModel> SYSTEM_LOG { get; set; } = new List<LogModel>();
         public static bool SYSTEM_LogTerminalIsOpen { get; set; } = false;
         public static string TELEGRAM_API_TOKEN { get; set; } = String.Empty;
