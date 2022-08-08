@@ -7,13 +7,27 @@ The bot text you in english and was "programmed in english", but the WetterOnlin
 
 This bot runs over the "unofficial" API of WetterOnline, a german weather data service. For this purpose the converter ConvertApi is used to convert html code to png.
 
+## Required
+
+Before the bot can run it has to have the DotNet Runtime version 6 installed. It has to be done as explained [here](https://docs.microsoft.com/en-us/dotnet/core/install/linux) in the Microsoft documentation.
+
+A direct link for:
+[CentOS](https://docs.microsoft.com/en-us/dotnet/core/install/linux-centos)
+[Debian](https://docs.microsoft.com/en-us/dotnet/core/install/linux-debian)
+[Fedora](https://docs.microsoft.com/en-us/dotnet/core/install/linux-fedora)
+[OpenSUSE](https://docs.microsoft.com/en-us/dotnet/core/install/linux-opensuse)
+[Ubuntu](https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu)
+[SLES](https://docs.microsoft.com/en-us/dotnet/core/install/linux-sles)
+
+Make sure that it is a **RUNTIME** of **.NET6**!
+
 
 ## How to Download:
 
 Go to the "Releases" and download any version.
 Or <br/>
-[press here to download for windows](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.2/Telegram_WetterOnline_Bot-WindowsX64.zip) <br/>
-[press here to download for linux (tar xz)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.2/Telegram_WetterOnline_Bot-LinuxX64.tar.xz)<br/>
+[press here to download for windows(.zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.3/Telegram_WetterOnline_Bot-WindowsX64.zip) <br/>
+[press here to download for linux (.tar.xz)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.3/Telegram_WetterOnline_Bot-LinuxX64.tar.xz)<br/>
 to download if you want the latest one
 
 
@@ -67,6 +81,10 @@ to download if you want the latest one
 
 
 # CHANGELOG
+
+## 1.5.0.3
+- Program is no longer standalone, that means .Net 6 must be installed on the Server, explained above in the "required" section. Reason: There were errors during the runtime that were not during debugging.
+- The file is no longer so large because the .Net6 must now be provided by you.
 
 ## 1.5.0.2
 - A NULL exception was found and fixed (wetteronline)
