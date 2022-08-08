@@ -38,10 +38,6 @@
                         ShowTheLogTerminal();
                         break;
 
-                    case "alllogs":
-                        ShowsAllLogs();
-                        break;
-
                     case "errlogs":
                         ShowsAllErrorLogs();
                         break;
@@ -80,7 +76,6 @@
             Console.WriteLine($"rl          =>   Reload Config File");
             Console.WriteLine($"stat        =>   Show the status");
             Console.WriteLine($"logs        =>   Show the Log-Terminal");
-            Console.WriteLine($"alllogs        =>   Show all Logs (include Debug Messages)");
             Console.WriteLine($"errlogs     =>   Shows all Error logs");
             Console.WriteLine($"warlogs     =>   Shows all Warning logs");
             Console.WriteLine($"scslogs     =>   Shows all Successful logs");
@@ -135,9 +130,6 @@
         private static void ShowTheLogTerminal()
             => WriteAllLogsFromList(Logger.LogLevel.All);
 
-        private static void ShowsAllLogs()
-            => WriteAllLogsFromList(Logger.LogLevel.All, true);
-
         private static void ShowsAllErrorLogs()
             => WriteAllLogsFromList(Logger.LogLevel.Error);
 
@@ -153,7 +145,7 @@
         private static void ShowsAllDebugLogs()
             => WriteAllLogsFromList(Logger.LogLevel.Debug);
 
-        private static void WriteAllLogsFromList(Logger.LogLevel SortLogLevel, bool WithDebugLog = false)
+        private static void WriteAllLogsFromList(Logger.LogLevel SortLogLevel)
         {
             cls();
             
