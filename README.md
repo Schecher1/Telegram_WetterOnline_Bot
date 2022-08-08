@@ -11,7 +11,7 @@ This bot runs over the "unofficial" API of WetterOnline, a german weather data s
 
 Make sure that it is a **RUNTIME** of **.NET6**!
 
-### Linux
+### Linux:
 Before the bot can run it has to have the DotNet Runtime version 6 installed. It has to be done as explained [here](https://docs.microsoft.com/en-us/dotnet/core/install/linux) in the Microsoft documentation.
 
 A direct link for:
@@ -22,7 +22,7 @@ A direct link for:
 [Ubuntu](https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu) 
 [SLES](https://docs.microsoft.com/en-us/dotnet/core/install/linux-sles) 
 
-###Windows
+### Windows:
 Before the bot can run it has to have the DotNet Runtime version 6 installed.
 
 A direct link for:
