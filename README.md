@@ -9,25 +9,33 @@ This bot runs over the "unofficial" API of WetterOnline, a german weather data s
 
 ## Required
 
+Make sure that it is a **RUNTIME** of **.NET6**!
+
+### Linux
 Before the bot can run it has to have the DotNet Runtime version 6 installed. It has to be done as explained [here](https://docs.microsoft.com/en-us/dotnet/core/install/linux) in the Microsoft documentation.
 
 A direct link for:
-[CentOS](https://docs.microsoft.com/en-us/dotnet/core/install/linux-centos)
-[Debian](https://docs.microsoft.com/en-us/dotnet/core/install/linux-debian)
-[Fedora](https://docs.microsoft.com/en-us/dotnet/core/install/linux-fedora)
-[OpenSUSE](https://docs.microsoft.com/en-us/dotnet/core/install/linux-opensuse)
-[Ubuntu](https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu)
-[SLES](https://docs.microsoft.com/en-us/dotnet/core/install/linux-sles)
+[CentOS](https://docs.microsoft.com/en-us/dotnet/core/install/linux-centos) 
+[Debian](https://docs.microsoft.com/en-us/dotnet/core/install/linux-debian) 
+[Fedora](https://docs.microsoft.com/en-us/dotnet/core/install/linux-fedora) 
+[OpenSUSE](https://docs.microsoft.com/en-us/dotnet/core/install/linux-opensuse) 
+[Ubuntu](https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu) 
+[SLES](https://docs.microsoft.com/en-us/dotnet/core/install/linux-sles) 
 
-Make sure that it is a **RUNTIME** of **.NET6**!
+###Windows
+Before the bot can run it has to have the DotNet Runtime version 6 installed.
 
+A direct link for:
+[Windows x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-6.0.7-windows-x64-installer) 
+[Windows x86](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-6.0.7-windows-x86-installer) 
 
 ## How to Download:
 
 Go to the "Releases" and download any version.
 Or <br/>
-[press here to download for windows(.zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.3/Telegram_WetterOnline_Bot-WindowsX64.zip) <br/>
-[press here to download for linux (.tar.xz)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.3/Telegram_WetterOnline_Bot-LinuxX64.tar.xz)<br/>
+[press here to download for windows(.zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.4/Telegram_WetterOnline_Bot-WindowsX64.zip) <br/>
+[press here to download for linux (.zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.4/Telegram_WetterOnline_Bot-LinuxX64.zip)<br/>
+[press here to download for linux (.tar.xz)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.4/Telegram_WetterOnline_Bot-LinuxX64.tar.xz)<br/>
 to download if you want the latest one
 
 
@@ -81,6 +89,9 @@ to download if you want the latest one
 
 
 # CHANGELOG
+
+## 1.5.0.4
+- The problem was found, why it sometimes worked and sometimes not (NULL Expection). It was my fault. This now works.
 
 ## 1.5.0.3
 - Program is no longer standalone, that means .Net 6 must be installed on the Server, explained above in the "required" section. Reason: There were errors during the runtime that were not during debugging.
