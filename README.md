@@ -33,9 +33,9 @@ A direct link for:
 
 Go to the "Releases" and download any version.
 Or <br/>
-[press here to download for windows(.zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.4/Telegram_WetterOnline_Bot-WindowsX64.zip) <br/>
-[press here to download for linux (.zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.4/Telegram_WetterOnline_Bot-LinuxX64.zip)<br/>
-[press here to download for linux (.tar.xz)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.4/Telegram_WetterOnline_Bot-LinuxX64.tar.xz)<br/>
+[press here to download for windows(.zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.5/Telegram_WetterOnline_Bot-WindowsX64.zip) <br/>
+[press here to download for linux (.zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.5/Telegram_WetterOnline_Bot-LinuxX64.zip)<br/>
+[press here to download for linux (.tar.xz)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.5/Telegram_WetterOnline_Bot-LinuxX64.tar.xz)<br/>
 to download if you want the latest one
 
 
@@ -89,6 +89,9 @@ to download if you want the latest one
 
 
 # CHANGELOG
+
+## 1.5.0.5
+- The next NULL error was found and fixed (probable there are still some, but will be fixed immediately).
 
 ## 1.5.0.4
 - The problem was found, why it sometimes worked and sometimes not (NULL Expection). It was my fault. This now works.
