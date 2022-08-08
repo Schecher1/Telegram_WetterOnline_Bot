@@ -38,6 +38,10 @@
                         ShowTheLogTerminal();
                         break;
 
+                    case "alllogs":
+                        ShowsAllLogs();
+                        break;
+
                     case "errlogs":
                         ShowsAllErrorLogs();
                         break;
@@ -76,6 +80,7 @@
             Console.WriteLine($"rl          =>   Reload Config File");
             Console.WriteLine($"stat        =>   Show the status");
             Console.WriteLine($"logs        =>   Show the Log-Terminal");
+            Console.WriteLine($"alllogs        =>   Show all Logs (include Debug Messages)");
             Console.WriteLine($"errlogs     =>   Shows all Error logs");
             Console.WriteLine($"warlogs     =>   Shows all Warning logs");
             Console.WriteLine($"scslogs     =>   Shows all Successful logs");
@@ -130,6 +135,9 @@
         private static void ShowTheLogTerminal()
             => WriteAllLogsFromList(Logger.LogLevel.All);
 
+        private static void ShowsAllLogs()
+            => WriteAllLogsFromList(Logger.LogLevel.All, true);
+
         private static void ShowsAllErrorLogs()
             => WriteAllLogsFromList(Logger.LogLevel.Error);
 
@@ -145,18 +153,22 @@
         private static void ShowsAllDebugLogs()
             => WriteAllLogsFromList(Logger.LogLevel.Debug);
 
-        private static void WriteAllLogsFromList(Logger.LogLevel SortLogLevel)
+        private static void WriteAllLogsFromList(Logger.LogLevel SortLogLevel, bool WithDebugLog = false)
         {
             cls();
             
             if (EnvironmentVariable.SYSTEM_LOG.Count != 0)
                 foreach (LogModel log in EnvironmentVariable.SYSTEM_LOG)
                 {
+
                     //sort the logs
+                    //check if all logs should be shown
                     if (Logger.LogLevel.All != SortLogLevel)
+                        //check if the log level is the same as the sort log level
                         if (log.LogLevel != SortLogLevel)
                             continue;
-                    
+
+
                     //reset the font color to default
                     Console.ResetColor();
 

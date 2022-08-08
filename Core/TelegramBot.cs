@@ -57,6 +57,7 @@ namespace Telegram_WetterOnline_Bot.Core
                 {
                     Logger.Log(Logger.LogLevel.Warning, "Telegram-Bot", $"The Message from {e.Message.Chat.Id} is null!");
                     _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "An error has occurred, your input was incorrect");
+                    return;
                 }
 
                 //tempary, is crappy but i know
