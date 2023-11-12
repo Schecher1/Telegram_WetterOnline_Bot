@@ -89,15 +89,17 @@ namespace Telegram_WetterOnline_Bot.Core
 
                 string widgetHtml = WetterOnline.GetWidgetLink(locationData.geoID, locationData.locationName);
 
-                string widgetLink = ConvertApi.HtmlToPng(widgetHtml);
 
-                if (widgetLink == String.Empty || widgetLink is null)
+                string pathToWidget = "";
+
+                
+                if (pathToWidget == String.Empty || pathToWidget is null)
                 {
                     await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "An error has occurred, please call an Admin!");
                     return;
                 }
 
-                await _client.SendPhotoAsync(e.Message.Chat.Id, widgetLink);
+                await _client.SendPhotoAsync(e.Message.Chat.Id, pathToWidget);
             }
             catch (Exception ex)
             {

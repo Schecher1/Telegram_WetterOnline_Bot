@@ -53,7 +53,6 @@
             ConfigModel config = new ConfigModel()
             {
                 Telegram_API_Token = "0000000000:AAAAA-aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                Convert_API_Token = "aaaaaaaaaaaaaaaa",
                 Telegrambot_Owner_Name = "@YouTelegramUsername",
                 Telegrambot_ID_Whitelist = new int[] { 000000000 }
             };
@@ -66,7 +65,6 @@
         private static void SetConfig(ConfigModel? config)
         {
             EnvironmentVariable.TELEGRAM_API_TOKEN = config.Telegram_API_Token;
-            EnvironmentVariable.CONVERT_API_TOKEN = config.Convert_API_Token;
             EnvironmentVariable.TELEGRAMBOT_OWNER_NAME = config.Telegrambot_Owner_Name;
             EnvironmentVariable.TELEGRAM_ID_WHITELIST = config.Telegrambot_ID_Whitelist;
         }
