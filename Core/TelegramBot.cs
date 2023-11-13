@@ -62,7 +62,7 @@ namespace Telegram_WetterOnline_Bot.Core
                     return;
                 }
 
-                //tempary, is crappy but i know
+                
                 if (e.Message.Text.Contains("<=>"))
                     SendWidget(sender, e);
                 else
@@ -90,10 +90,7 @@ namespace Telegram_WetterOnline_Bot.Core
                 }
 
                 string widgetHtml = WetterOnline.GetWidgetLink(locationData.geoID, locationData.locationName);
-
-
                 string pathToWidget = await Converter.HtmlToJpeg(widgetHtml);
-
 
                 if (pathToWidget == String.Empty || pathToWidget is null)
                 {
@@ -123,6 +120,17 @@ namespace Telegram_WetterOnline_Bot.Core
             
             try
             {
+                //if there is just one suggest, then accept it as the right one
+                if (suggests.Count is 1)
+                {
+                    //manipulate the message, for the method "SendWidget"
+                    e.Message.Text = suggests[0].id + "<=>" + suggests[0].n;
+                    
+                    SendWidget(sender, e);
+                    return;
+                }
+
+                //check if there are any suggests
                 if (suggests.Count is 0 || suggests[0].id is null || suggests is null)
                 {
                     await  _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "I have not found any data for this place! Please pay attention to your spelling!");
