@@ -4,48 +4,26 @@
 The bot text you in english and was "programmed in english", but the WetterOnline API runs only over DEU and ITA, that means you don't get weather data in english! So do not be surprised if the bot sends you German weather data, so the image then contains German words!
 
 ## Application description:
+This bot runs over the "unofficial" API of WetterOnline, a german weather data service.  
+So, the German weather service "WetterOnline" has a free widget function and I misused it, for this bot.   
 
-This bot runs over the "unofficial" API of WetterOnline, a german weather data service. For this purpose the converter ConvertApi is used to convert html code to png.
+The widgets are fetched, screenshotted by a headless browser and sent.  
 
 ## Required
-
 Make sure that it is a **RUNTIME** of **.NET6**!
 
-### Linux:
-Before the bot can run it has to have the DotNet Runtime version 6 installed. It has to be done as explained [here](https://docs.microsoft.com/en-us/dotnet/core/install/linux) in the Microsoft documentation.
-
-A direct link for:
-[CentOS](https://docs.microsoft.com/en-us/dotnet/core/install/linux-centos) 
-[Debian](https://docs.microsoft.com/en-us/dotnet/core/install/linux-debian) 
-[Fedora](https://docs.microsoft.com/en-us/dotnet/core/install/linux-fedora) 
-[OpenSUSE](https://docs.microsoft.com/en-us/dotnet/core/install/linux-opensuse) 
-[Ubuntu](https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu) 
-[SLES](https://docs.microsoft.com/en-us/dotnet/core/install/linux-sles) 
-
-### Windows:
-Before the bot can run it has to have the DotNet Runtime version 6 installed.
-
-A direct link for:
-[Windows x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-6.0.7-windows-x64-installer) 
-[Windows x86](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-6.0.7-windows-x86-installer) 
-
-## How to Download:
-
-Go to the "Releases" and download any version.
-Or <br/>
-[press here to download for windows(.zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.5/Telegram_WetterOnline_Bot-WindowsX64.zip) <br/>
-[press here to download for linux (.zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.5/Telegram_WetterOnline_Bot-LinuxX64.zip)<br/>
-[press here to download for linux (.tar.xz)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.5/Telegram_WetterOnline_Bot-LinuxX64.tar.xz)<br/>
-to download if you want the latest one
+### Docker:
+This bot is now only available for docker.  
+There are simple reasons, the bot does not need much and can be easily docked by anyone.  
 
 
 ## Features:
-
 ✔️ Selfhost<br/>
 ✔️ Logs with history<br/>
 ✔️ Location suggestions<br/>
 ✔️ Config File<br/>
 ✔️ Weather data as a pretty picture<br/>
+✔️ Optimized for docker<br/>
 
 ## Image:
 ### Config-File:
@@ -69,26 +47,27 @@ to download if you want the latest one
 
 ## Process description:
 
-1. download program
+1.) run this bot as a docker container 
 
-2. start program
+2.) fill the generated config file with your data 
 
-3. fill the generated config file with your data 
+     2. 1.) get an API token for a Telegram bot (https://t.me/BotFather) just write to him.
 
-     3. 1. get an API token for a Telegram bot (https://t.me/BotFather) just write to him.
+     2. 2.) then write you username in it. (is not important, can be also left empty)
 
-     3. 2. get an API token for the converter (https://www.convertapi.com/), you need the "API Secret" and NOT the "API Key".
+3. restart the bot and write to him, no matter what. It will tell you that he is not allowed to serve you and at the same time he´s send you your ID, which you then have to enter in the config file. If you want to enter more than one ID you have to separate it with a ','.
 
-     3. 3. then write you username in it. (is not important, can be also left empty)
+4. write the bot a place e.g. Berlin or Berli and he will suggest you places that you could mean, and more is then described in the message.
 
-4. start the bot and write to him, no matter what. It will tell you that he is not allowed to serve you and at the same time he´s send you your ID, which you then have to enter in the config file. If you want to enter more than one ID you have to separate it with a decimal point.
-
-5. write the bot a place e.g. Berlin or Berli and he will suggest you places that you could mean, and more is then described in the message.
-
-6. have fun!
+5. have fun!
 
 
 # CHANGELOG
+
+## 1.6.0.0
+- The ConvertAPI was replaced with something better and therefore no longer used
+- If there is just one suggest, then the bot will send you the weather image directly
+- The Bot is now only for docker, because it is easier to use and maintain
 
 ## 1.5.0.5
 - The next NULL error was found and fixed (probable there are still some, but will be fixed immediately).
