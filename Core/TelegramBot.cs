@@ -1,4 +1,6 @@
-﻿using Telegram.Bot;
+﻿using System.Threading;
+using Telegram.Bot;
+using Telegram.Bot.Types;
 
 namespace Telegram_WetterOnline_Bot.Core
 {
@@ -90,16 +92,24 @@ namespace Telegram_WetterOnline_Bot.Core
                 string widgetHtml = WetterOnline.GetWidgetLink(locationData.geoID, locationData.locationName);
 
 
-                string pathToWidget = "";
+                string pathToWidget = await Converter.HtmlToJpeg(widgetHtml);
 
-                
+
                 if (pathToWidget == String.Empty || pathToWidget is null)
                 {
                     await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "An error has occurred, please call an Admin!");
                     return;
                 }
 
-                await _client.SendPhotoAsync(e.Message.Chat.Id, pathToWidget);
+                using (var stream = new FileStream(pathToWidget, FileMode.Open))
+                {
+                    string textMessage = $"These are the weather forecasts for the next three days for {locationData.zipCode} {locationData.locationName} ({locationData.subStateID}) 🌤" + Environment.NewLine +
+                                         $"Today is {DateTime.Today.ToString("dd.MM.yyyy")} 📅 at {DateTime.UtcNow.ToString("HH:mm")} 🕔" +  Environment.NewLine +
+                                         $"For more info visit: {locationData.url}" + Environment.NewLine + Environment.NewLine +
+                                         $"Powered by WetterOnline & the Developer @Schecher_1" +  Environment.NewLine;
+
+                    await _client.SendPhotoAsync(e.Message.Chat.Id, stream, textMessage);
+                }
             }
             catch (Exception ex)
             {
