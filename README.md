@@ -1,94 +1,85 @@
 ﻿# Telegram-WetterOnline-Bot
 
 ## Important!
-The bot text you in english and was "programmed in english", but the WetterOnline API runs only over DEU and ITA, that means you don't get weather data in english! So do not be surprised if the bot sends you German weather data, so the image then contains German words!
+The bot text you in German and was programmed in english, and the WetterOnline API runs only over DEU and ITA, that means you don't get weather data in english! So do not be surprised if the bot sends you German weather data, so the image then contains German words!
 
 ## Application description:
+This bot runs over the "unofficial" API of WetterOnline, a german weather data service.  
+So, the German weather service "WetterOnline" has a free widget function and I misused it, for this bot.   
 
-This bot runs over the "unofficial" API of WetterOnline, a german weather data service. For this purpose the converter ConvertApi is used to convert html code to png.
+The widgets are fetched, screenshotted by a headless browser and sent, using PuppeteerSharp.  
 
 ## Required
+Make sure that your Server has the docker CLI
 
-Make sure that it is a **RUNTIME** of **.NET6**!
-
-### Linux:
-Before the bot can run it has to have the DotNet Runtime version 6 installed. It has to be done as explained [here](https://docs.microsoft.com/en-us/dotnet/core/install/linux) in the Microsoft documentation.
-
-A direct link for:
-[CentOS](https://docs.microsoft.com/en-us/dotnet/core/install/linux-centos) 
-[Debian](https://docs.microsoft.com/en-us/dotnet/core/install/linux-debian) 
-[Fedora](https://docs.microsoft.com/en-us/dotnet/core/install/linux-fedora) 
-[OpenSUSE](https://docs.microsoft.com/en-us/dotnet/core/install/linux-opensuse) 
-[Ubuntu](https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu) 
-[SLES](https://docs.microsoft.com/en-us/dotnet/core/install/linux-sles) 
-
-### Windows:
-Before the bot can run it has to have the DotNet Runtime version 6 installed.
-
-A direct link for:
-[Windows x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-6.0.7-windows-x64-installer) 
-[Windows x86](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-6.0.7-windows-x86-installer) 
-
-## How to Download:
-
-Go to the "Releases" and download any version.
-Or <br/>
-[press here to download for windows(.zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.5/Telegram_WetterOnline_Bot-WindowsX64.zip) <br/>
-[press here to download for linux (.zip)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.5/Telegram_WetterOnline_Bot-LinuxX64.zip)<br/>
-[press here to download for linux (.tar.xz)](https://github.com/Schecher1/Telegram_WetterOnline_Bot/releases/download/Telegram-WetterOnline-Bot-Vers-1.5.0.5/Telegram_WetterOnline_Bot-LinuxX64.tar.xz)<br/>
-to download if you want the latest one
-
+### Docker:
+This bot is only available for docker.  
+There are simple reasons, the bot does not need much and can be easily docked by anyone.  
 
 ## Features:
-
 ✔️ Selfhost<br/>
 ✔️ Logs with history<br/>
 ✔️ Location suggestions<br/>
-✔️ Config File<br/>
+✔️ With Docker Environment Variable<br/>
 ✔️ Weather data as a pretty picture<br/>
+✔️ Optimized for docker<br/>
 
 ## Image:
-### Config-File:
-![Config-File](IMAGES/Version%201.0.0.0/ConfigFile.PNG)
+### Telegram Whitelist:
+![Telegram-Whitelist](IMAGES/Version%202.0.0.0/Whitelist.png)
 
 ### Telegram Suggestion:
-![Telegram-Suggestion](IMAGES/Version%201.0.0.0/TelegramSuggestion.png)
+![Telegram-Suggestion](IMAGES/Version%202.0.0.0/TelegramSuggestion.png)
 
 ### Telegram Weather Picture:
-![Telegram-Weather-Picture](IMAGES/Version%201.0.0.0/TelegramWeatherPicture.png)
+![Telegram-Weather-Picture](IMAGES/Version%202.0.0.0/TelegramWeatherPicture.png)
 
-### Console UI:
-![Console-UI](IMAGES/Version%201.5.0.0/ConsoleUI_UI.PNG)
+### Logs:
+![Console-Logs](IMAGES/Version%202.0.0.0/Console_DebugModeOff.png)
 
-### Console All Logs:
-![Console-All-Logs](IMAGES/Version%201.5.0.0/ConsoleUI_Log_All.PNG)
-
-### Console Log Filter:
-![Console-Log-Filter](IMAGES/Version%201.5.0.0/ConsoleUI_Log_Err.PNG)
+### Logs with Debug Mode:
+![Console-Logs-WithDebug](IMAGES/Version%202.0.0.0/Console_DebugModeOn.png)
 
 
 ## Process description:
+1.) Get an API token for a Telegram bot (https://t.me/BotFather) just write to him.
 
-1. download program
+2.) Run this docker run command (with the API-Token):  
+```
+docker run -d \
+  --name  telegramWetterOnlineBot_01 \
+  -e TELEGRAM_API_TOKEN=0000000000:AAAAAAAAAAAAAAAAAAAaaaaaaaa-aaaaaaa \
+  -e TELEGRAMBOT_OWNER_NAME=@Schecher_1 \
+  -e TELEGRAM_ID_WHITELIST=000000000 \
+  schecher/telegramwetteronlinebot:latest
+```
 
-2. start program
+```use  '-e DEBUG=true' for debug mode```
 
-3. fill the generated config file with your data 
+3.) Write to the bot, no matter what. It will tell you that it is not allowed to serve you and at the same time send you your ID.
 
-     3. 1. get an API token for a Telegram bot (https://t.me/BotFather) just write to him.
+4.) Delete the container with the following command and run it again with the command (with the API-Token, Owner Name and your ID)
+``` docker stop telegramWetterOnlineBot_01 && docker rm telegramWetterOnlineBot_01 ```
 
-     3. 2. get an API token for the converter (https://www.convertapi.com/), you need the "API Secret" and NOT the "API Key".
+```(If you want to enter more than one ID you have to separate it with a ';')```
 
-     3. 3. then write you username in it. (is not important, can be also left empty)
+5.) write the bot a place e.g. Berlin or Berli and he will suggest you places that you could mean, and more is then described in the message.
 
-4. start the bot and write to him, no matter what. It will tell you that he is not allowed to serve you and at the same time he´s send you your ID, which you then have to enter in the config file. If you want to enter more than one ID you have to separate it with a decimal point.
-
-5. write the bot a place e.g. Berlin or Berli and he will suggest you places that you could mean, and more is then described in the message.
-
-6. have fun!
+6.) have fun!
 
 
 # CHANGELOG
+
+## 2.0.0.0
+- The bot now runs with Docker
+- The bot uses the Headless Browser PuppeteerSharp for the HTML to Image conversion
+- The Container uses Environment Variables for the configs
+- The bot will log to the console and to a file
+
+## 1.6.0.0
+- The ConvertAPI was replaced with something better and therefore no longer used
+- If there is just one suggest, then the bot will send you the weather image directly
+- The Bot is now only for docker, because it is easier to use and maintain
 
 ## 1.5.0.5
 - The next NULL error was found and fixed (probable there are still some, but will be fixed immediately).
