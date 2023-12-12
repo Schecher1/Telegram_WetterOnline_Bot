@@ -58,7 +58,7 @@ namespace Telegram_WetterOnline_Bot.Core
                 if (e.Message.Text is null)
                 {
                     Logger.Log(Logger.LogLevel.Info, "Telegram-Bot", $"The Message from {e.Message.Chat.Id} is null!");
-                    _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "An error has occurred, your input was incorrect");
+                    _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "Es ist ein Fehler aufgetreten, Ihre Eingabe war falsch");
                     return;
                 }
 
@@ -85,7 +85,7 @@ namespace Telegram_WetterOnline_Bot.Core
                 //can happend if the separator contains in the text, watch at the top "split"
                 if (locationData is null)
                 {
-                    await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "An error has occurred, your input was incorrect");
+                    await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "Es ist ein Fehler aufgetreten, Ihre Eingabe war falsch");
                     return;
                 }
 
@@ -94,18 +94,19 @@ namespace Telegram_WetterOnline_Bot.Core
 
                 if (pathToWidget == String.Empty || pathToWidget is null)
                 {
-                    await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "An error has occurred, please call an Admin!");
+                    await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "Es ist ein Fehler aufgetreten, bitte rufen Sie einen Admin an!");
                     return;
                 }
 
                 using (var stream = new FileStream(pathToWidget, FileMode.Open))
                 {
-                    string textMessage = $"These are the weather forecasts for the next three days for {locationData.zipCode} {locationData.locationName} ({locationData.subStateID}) 🌤" + Environment.NewLine +
-                                         $"Today is {DateTime.Today.ToString("dd.MM.yyyy")} 📅 at {DateTime.UtcNow.ToString("HH:mm")} 🕔" +  Environment.NewLine +
-                                         $"For more info visit: {locationData.url}" + Environment.NewLine + Environment.NewLine +
-                                         $"Powered by WetterOnline & the Developer @Schecher_1" +  Environment.NewLine;
+                    string textMessage = $"Das sind die Wettervorhersagen für die nächsten drei Tage für {locationData.zipCode} {locationData.locationName} ({locationData.subStateID}) 🌤" + Environment.NewLine +
+                                         $"Heute ist der {DateTime.Today.ToString("dd.MM.yyyy")} 📅 um {DateTime.UtcNow.ToString("HH:mm")} Uhr 🕔" + Environment.NewLine +
+                                         $"Für weitere Informationen besuchen Sie: {locationData.url}" + Environment.NewLine + Environment.NewLine +
+                                         $"Angetrieben von WetterOnline & dem Entwickler @Schecher_1" + Environment.NewLine;
 
                     await _client.SendPhotoAsync(e.Message.Chat.Id, stream, textMessage);
+                    Logger.Log(Logger.LogLevel.Successful, "TelegramBot", $"Send Widget to {e.Message.Chat.Id}!");
                 }
             }
             catch (Exception ex)
@@ -133,17 +134,17 @@ namespace Telegram_WetterOnline_Bot.Core
                 //check if there are any suggests
                 if (suggests.Count is 0 || suggests[0].id is null || suggests is null)
                 {
-                    await  _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "I have not found any data for this place! Please pay attention to your spelling!");
+                    await  _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "Ich habe keine Daten zu diesem Ort gefunden! Bitte achten Sie auf Ihre Rechtschreibung!");
                     return;
                 }
             }
             catch (IndexOutOfRangeException ex)
             {
-                await  _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "I have not found any data for this place! Please pay attention to your spelling!");
+                await  _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "Ich habe keine Daten zu diesem Ort gefunden! Bitte achten Sie auf Ihre Rechtschreibung!");
                 return;
             }
 
-            string message = "If your location is present, please send the respective line, i.e. \"id <=> name\"" + Environment.NewLine + Environment.NewLine;
+            string message = "Wenn Ihr Standort vorhanden ist, senden Sie bitte die entsprechende Zeile, d.h. \"id <=> name\"" + Environment.NewLine + Environment.NewLine;
 
             foreach (var suggest in suggests)
             {
@@ -158,11 +159,11 @@ namespace Telegram_WetterOnline_Bot.Core
             Logger.Log(Logger.LogLevel.Info, "Whitelist-System", $"One User wrote and was not on the Whitelist!    ID: {e.Message.Chat.Id}");
             
             _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id),
-                      $"I'm sorry, I'm not allowed to serve you. " +
-                      $"You are not on my whitelist. " +
-                      $"Please contact my owner so he can add you! " + Environment.NewLine +
-                      $"My owner is {EnvironmentVariable.TELEGRAMBOT_OWNER_NAME}" + Environment.NewLine +
-                      $"(Your ID: {e.Message.Chat.Id})");
+                      $"Es tut mir leid, ich darf Sie nicht bedienen. " +
+                      $"Sie sind nicht auf meiner Whitelist. " +
+                      $"Bitte kontaktieren Sie meinen Besitzer, damit er Sie hinzufügen kann! " + Environment.NewLine +
+                      $"Mein Besitzer ist {EnvironmentVariable.TELEGRAMBOT_OWNER_NAME}" + Environment.NewLine +
+                      $"(Ihre ID: {e.Message.Chat.Id})");
         }
     }
 }
