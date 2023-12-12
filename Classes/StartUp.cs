@@ -7,10 +7,6 @@
             => Start();
         private static void Start()
         {
-            if (!Config.InitConfigFile())
-                return;
-
-
             //get env vars 
             string telegramToken = Environment.GetEnvironmentVariable("TELEGRAM_API_TOKEN");
             string telegramOwnerName = Environment.GetEnvironmentVariable("TELEGRAMBOT_OWNER_NAME");
