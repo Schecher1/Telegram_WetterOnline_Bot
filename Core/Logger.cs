@@ -7,32 +7,27 @@
             switch (logLevel)
             {
                 case LogLevel.Debug:
-                    if (EnvironmentVariable.SYSTEM_LogTerminalIsOpen)
-                        WriteLog(ConsoleColor.DarkGray, "Debug", logPrefix, logMessage);
+                    WriteLog(ConsoleColor.DarkGray, "Debug", logPrefix, logMessage);
                     SaveLog(logLevel, logPrefix, logMessage);
                     WriteLogIntoFile("Debug", logPrefix, logMessage);
                     break;
                 case LogLevel.Info:
-                    if (EnvironmentVariable.SYSTEM_LogTerminalIsOpen)
-                        WriteLog(ConsoleColor.White, "Info", logPrefix, logMessage);
+                    WriteLog(ConsoleColor.White, "Info", logPrefix, logMessage);
                     SaveLog(logLevel, logPrefix, logMessage);
                     WriteLogIntoFile("Info", logPrefix, logMessage);
                     break;
                 case LogLevel.Successful:
-                    if (EnvironmentVariable.SYSTEM_LogTerminalIsOpen)
-                        WriteLog(ConsoleColor.Green, "Successful", logPrefix, logMessage);
+                    WriteLog(ConsoleColor.Green, "Successful", logPrefix, logMessage);
                     SaveLog(logLevel, logPrefix, logMessage);
                     WriteLogIntoFile("Successful", logPrefix, logMessage);
                     break;
                 case LogLevel.Warning:
-                    if (EnvironmentVariable.SYSTEM_LogTerminalIsOpen)
-                        WriteLog(ConsoleColor.DarkYellow, "Warning", logPrefix, logMessage);
+                    WriteLog(ConsoleColor.DarkYellow, "Warning", logPrefix, logMessage);
                     SaveLog(logLevel, logPrefix, logMessage);
                     WriteLogIntoFile("Warning", logPrefix, logMessage);
                     break;
-                case LogLevel.Error:
-                    if (EnvironmentVariable.SYSTEM_LogTerminalIsOpen)
-                        WriteLog(ConsoleColor.Red, "Error", logPrefix, logMessage);
+                case LogLevel.Error:                
+                    WriteLog(ConsoleColor.Red, "Error", logPrefix, logMessage);
                     SaveLog(logLevel, logPrefix, logMessage);
                     WriteLogIntoFile("Error", logPrefix, logMessage);
                     break;
