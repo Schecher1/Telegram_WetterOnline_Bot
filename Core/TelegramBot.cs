@@ -21,7 +21,7 @@ namespace Telegram_WetterOnline_Bot.Core
             _client.OnMessage += Client_OnMessage;
         }
 
-        public static void StartRM()
+        public void StartRM()
         {
             //the bot will now accepts messages
             _client.StartReceiving();
@@ -29,7 +29,7 @@ namespace Telegram_WetterOnline_Bot.Core
             Logger.Log(Logger.LogLevel.Info, "Telegram-Bot", "Receives now messages!");
         }
         
-        public static void StopRM()
+        public void StopRM()
         {
             //the bot no longer accepts messages
             try

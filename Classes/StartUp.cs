@@ -2,10 +2,9 @@
 {
     public class StartUp
     {
-        bool isRunning = true;
         public StartUp()
             => Start();
-        private static void Start()
+        private void Start()
         {
             //get env vars 
             string telegramToken = Environment.GetEnvironmentVariable("TELEGRAM_API_TOKEN");
@@ -24,10 +23,12 @@
 
             TelegramBot bot = new TelegramBot();
 
-            bot.SetAPIKey(EnvironmentVariable.TELEGRAM_API_TOKEN);
-
+            bot.SetAPIKey(telegramToken);
             bot.Init();
-            TelegramBot.StartRM();
+            bot.StartRM();
+
+            //let the docker container run 4 ever
+            Thread.Sleep(Timeout.Infinite);
         }
     }
 }
