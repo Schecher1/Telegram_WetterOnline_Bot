@@ -1,5 +1,10 @@
 {
-  "Docker": {
-    "commandName": "Docker"
+  "profiles": {
+    "Telegram_WetterOnline_Bot": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
   }
 }
