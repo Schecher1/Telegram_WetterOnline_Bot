@@ -17,7 +17,7 @@
             bot.Init();
             TelegramBot.StartRM();
 
-            ConsoleUI.StartConsole();
+            //ConsoleUI.StartConsole();
         }
     }
 }
