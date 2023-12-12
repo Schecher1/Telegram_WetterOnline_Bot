@@ -13,6 +13,7 @@
                 string telegramToken = Environment.GetEnvironmentVariable("TELEGRAM_API_TOKEN");
                 string telegramOwnerName = Environment.GetEnvironmentVariable("TELEGRAMBOT_OWNER_NAME");
                 int[] telegramIDWhitelist = Array.ConvertAll(Environment.GetEnvironmentVariable("TELEGRAM_ID_WHITELIST").Split(';'), int.Parse);
+                bool isDebug = Environment.GetEnvironmentVariable("DEBUG") != null;
 
                 //check if env vars are empty
                 if (string.IsNullOrEmpty(telegramToken) || string.IsNullOrEmpty(telegramOwnerName) || telegramIDWhitelist is null)
@@ -28,6 +29,7 @@
                 EnvironmentVariable.TELEGRAM_API_TOKEN = telegramToken;
                 EnvironmentVariable.TELEGRAMBOT_OWNER_NAME = telegramOwnerName;
                 EnvironmentVariable.TELEGRAM_ID_WHITELIST = telegramIDWhitelist;
+                EnvironmentVariable.IS_DEBUG = isDebug;
 
                 //bot init
                 TelegramBot bot = new TelegramBot();

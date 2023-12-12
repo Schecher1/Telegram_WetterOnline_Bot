@@ -1,52 +1,47 @@
 ﻿# Telegram-WetterOnline-Bot
 
 ## Important!
-The bot text you in english and was "programmed in english", but the WetterOnline API runs only over DEU and ITA, that means you don't get weather data in english! So do not be surprised if the bot sends you German weather data, so the image then contains German words!
+The bot text you in German and was programmed in english, and the WetterOnline API runs only over DEU and ITA, that means you don't get weather data in english! So do not be surprised if the bot sends you German weather data, so the image then contains German words!
 
 ## Application description:
 This bot runs over the "unofficial" API of WetterOnline, a german weather data service.  
 So, the German weather service "WetterOnline" has a free widget function and I misused it, for this bot.   
 
-The widgets are fetched, screenshotted by a headless browser and sent.  
+The widgets are fetched, screenshotted by a headless browser and sent, using PuppeteerSharp.  
 
 ## Required
-Make sure that it is a **RUNTIME** of **.NET6**!
+Make sure that your Server has the docker CLI
 
 ### Docker:
-This bot is now only available for docker.  
+This bot is only available for docker.  
 There are simple reasons, the bot does not need much and can be easily docked by anyone.  
-
 
 ## Features:
 ✔️ Selfhost<br/>
 ✔️ Logs with history<br/>
 ✔️ Location suggestions<br/>
-✔️ Config File<br/>
+✔️ With Docker Environment Variable<br/>
 ✔️ Weather data as a pretty picture<br/>
 ✔️ Optimized for docker<br/>
 
 ## Image:
-### Config-File:
-![Config-File](IMAGES/Version%201.0.0.0/ConfigFile.PNG)
+### Telegram Whitelist:
+![Telegram-Whitelist](IMAGES/Version%202.0.0.0/Whitelist.png)
 
 ### Telegram Suggestion:
-![Telegram-Suggestion](IMAGES/Version%201.0.0.0/TelegramSuggestion.png)
+![Telegram-Suggestion](IMAGES/Version%202.0.0.0/TelegramSuggestion.png)
 
 ### Telegram Weather Picture:
-![Telegram-Weather-Picture](IMAGES/Version%201.0.0.0/TelegramWeatherPicture.png)
+![Telegram-Weather-Picture](IMAGES/Version%202.0.0.0/TelegramWeatherPicture.png)
 
-### Console UI:
-![Console-UI](IMAGES/Version%201.5.0.0/ConsoleUI_UI.PNG)
+### Logs:
+![Console-Logs](IMAGES/Version%202.0.0.0/Console_DebugModeOff.png)
 
-### Console All Logs:
-![Console-All-Logs](IMAGES/Version%201.5.0.0/ConsoleUI_Log_All.PNG)
-
-### Console Log Filter:
-![Console-Log-Filter](IMAGES/Version%201.5.0.0/ConsoleUI_Log_Err.PNG)
+### Logs with Debug Mode:
+![Console-Logs-WithDebug](IMAGES/Version%202.0.0.0/Console_DebugModeOn.png)
 
 
 ## Process description:
-
 1.) run this bot as a docker container 
 
 2.) fill the generated config file with your data 
@@ -63,6 +58,12 @@ There are simple reasons, the bot does not need much and can be easily docked by
 
 
 # CHANGELOG
+
+## 2.0.0.0
+- The bot now runs with Docker
+- The bot uses the Headless Browser PuppeteerSharp for the HTML to Image conversion
+- The Container uses Environment Variables for the configs
+- The bot will log to the console and to a file
 
 ## 1.6.0.0
 - The ConvertAPI was replaced with something better and therefore no longer used

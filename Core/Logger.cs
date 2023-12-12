@@ -7,6 +7,8 @@
             switch (logLevel)
             {
                 case LogLevel.Debug:
+                    //just show debug logs if the program is in debug mode
+                    if (!EnvironmentVariable.IS_DEBUG) return;
                     WriteLog(ConsoleColor.DarkGray, "Debug", logPrefix, logMessage);
                     SaveLog(logLevel, logPrefix, logMessage);
                     WriteLogIntoFile("Debug", logPrefix, logMessage);
