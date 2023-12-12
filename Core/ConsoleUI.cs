@@ -10,9 +10,12 @@
             {
                 WriteStartScrren();
 
-                string? cmd = Console.ReadLine().ToLower();
+                string? cmd = Console.ReadLine();
 
-                switch (cmd)
+                if (cmd is null)
+                    continue;
+
+                switch (cmd.ToLower())
                 {
                     case "srm+":
                         StartReviceMessages();
