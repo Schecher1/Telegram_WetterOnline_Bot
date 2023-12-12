@@ -42,19 +42,30 @@ There are simple reasons, the bot does not need much and can be easily docked by
 
 
 ## Process description:
-1.) run this bot as a docker container 
+1.) Get an API token for a Telegram bot (https://t.me/BotFather) just write to him.
 
-2.) fill the generated config file with your data 
+2.) Run this docker run command (with the API-Token):  
+```
+docker run -d \
+  --name  telegramWetterOnlineBot_01 \
+  -e TELEGRAM_API_TOKEN=0000000000:AAAAAAAAAAAAAAAAAAAaaaaaaaa-aaaaaaa \
+  -e TELEGRAMBOT_OWNER_NAME=@Schecher_1 \
+  -e TELEGRAM_ID_WHITELIST=000000000 \
+  schecher/telegramwetteronlinebot:latest
+```
 
-     2. 1.) get an API token for a Telegram bot (https://t.me/BotFather) just write to him.
+```use  '-e DEBUG=true' for debug mode```
 
-     2. 2.) then write you username in it. (is not important, can be also left empty)
+3.) Write to the bot, no matter what. It will tell you that it is not allowed to serve you and at the same time send you your ID.
 
-3. restart the bot and write to him, no matter what. It will tell you that he is not allowed to serve you and at the same time he´s send you your ID, which you then have to enter in the config file. If you want to enter more than one ID you have to separate it with a ','.
+4.) Delete the container with the following command and run it again with the command (with the API-Token, Owner Name and your ID)
+``` docker stop telegramWetterOnlineBot_01 && docker rm telegramWetterOnlineBot_01 ```
 
-4. write the bot a place e.g. Berlin or Berli and he will suggest you places that you could mean, and more is then described in the message.
+```(If you want to enter more than one ID you have to separate it with a ';')```
 
-5. have fun!
+5.) write the bot a place e.g. Berlin or Berli and he will suggest you places that you could mean, and more is then described in the message.
+
+6.) have fun!
 
 
 # CHANGELOG
