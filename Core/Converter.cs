@@ -8,8 +8,16 @@ namespace Telegram_WetterOnline_Bot.Core
         {
             string outputPath = GetTempFilePath();
 
+            // Specify the path to the Chrome executable and disable the sandbox
+            var launchOptions = new LaunchOptions
+            {
+                Headless = true,
+                ExecutablePath = "/usr/bin/google-chrome-stable", // Adjust the path based on your environment
+                Args = new[] { "--no-sandbox" } // Add the --no-sandbox flag
+            };
+
             await new BrowserFetcher().DownloadAsync();
-            using (var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true }))
+            using (var browser = await Puppeteer.LaunchAsync(launchOptions))
             using (var page = await browser.NewPageAsync())
             {
                 await page.SetViewportAsync(new ViewPortOptions
@@ -29,7 +37,7 @@ namespace Telegram_WetterOnline_Bot.Core
                     {
                         X = 250,
                         Y = 150,
-                        Width = 300, 
+                        Width = 300,
                         Height = 300
                     },
                     Quality = 100
@@ -40,6 +48,7 @@ namespace Telegram_WetterOnline_Bot.Core
 
             return outputPath;
         }
+
 
         private static string GetTempFilePath()
         {
