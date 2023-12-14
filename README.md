@@ -29,7 +29,7 @@ There are simple reasons, the bot does not need much and can be easily docked by
 ![Telegram-Whitelist](IMAGES/Version%202.0.0.0/Whitelist.png)
 
 ### Telegram Suggestion:
-![Telegram-Suggestion](IMAGES/Version%202.0.0.0/TelegramSuggestion.png)
+![Telegram-Suggestion](IMAGES/Version%202.1.0.0/TelegramSuggestion.png)
 
 ### Telegram Weather Picture:
 ![Telegram-Weather-Picture](IMAGES/Version%202.0.0.0/TelegramWeatherPicture.png)
@@ -70,6 +70,12 @@ docker run -d \
 
 
 # CHANGELOG
+
+## 2.1.0.0
+- The Container will accept the Environment Variable "TZ" (TimeZone) now
+- The Container will now show the actual Time, not the UTC Time
+- The Bot will now show the Suggestions in Buttons (Telegram Inline Keyboard)
+- The Bot sends now a welcomes message, if you start the bot for the first time (/start command)
 
 ## 2.0.0.0
 - The bot now runs with Docker
