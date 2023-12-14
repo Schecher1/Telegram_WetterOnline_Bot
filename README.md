@@ -29,7 +29,7 @@ There are simple reasons, the bot does not need much and can be easily docked by
 ![Telegram-Whitelist](IMAGES/Version%202.0.0.0/Whitelist.png)
 
 ### Telegram Suggestion:
-![Telegram-Suggestion](IMAGES/Version%202.0.0.0/TelegramSuggestion.png)
+![Telegram-Suggestion](IMAGES/Version%202.1.0.0/TelegramSuggestion.png)
 
 ### Telegram Weather Picture:
 ![Telegram-Weather-Picture](IMAGES/Version%202.0.0.0/TelegramWeatherPicture.png)
