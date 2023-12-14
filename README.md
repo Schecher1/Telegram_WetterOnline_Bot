@@ -51,7 +51,7 @@ docker run -d \
   -e TELEGRAM_API_TOKEN=0000000000:AAAAAAAAAAAAAAAAAAAaaaaaaaa-aaaaaaa \
   -e TELEGRAMBOT_OWNER_NAME=@Schecher_1 \
   -e TELEGRAM_ID_WHITELIST=000000000 \
-  -e TZ=Europe/Berlin ^
+  -e TZ=Europe/Berlin \
   --restart=always \
   schecher/telegramwetteronlinebot:latest
 ```
