@@ -70,6 +70,10 @@ docker run -d \
 
 # CHANGELOG
 
+## 2.0.1.0
+- The Container will accept the Environment Variable "TZ" (TimeZone) now
+- The Container will now show the actual Time, not the UTC Time
+
 ## 2.0.0.0
 - The bot now runs with Docker
 - The bot uses the Headless Browser PuppeteerSharp for the HTML to Image conversion
