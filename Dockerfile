@@ -35,9 +35,6 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=build /app/publish .
 
-# Add TZ env variable
-ENV TZ=Europe/Berlin
-
 # Add runtime user
 RUN useradd -m worker
 
