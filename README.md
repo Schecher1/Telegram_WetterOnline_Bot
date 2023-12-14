@@ -74,6 +74,7 @@ docker run -d \
 - The Container will accept the Environment Variable "TZ" (TimeZone) now
 - The Container will now show the actual Time, not the UTC Time
 - The Bot will now show the Suggestions in Buttons (Telegram Inline Keyboard)
+- The Bot sends now a welcomes message, if you start the bot for the first time (/start command)
 
 ## 2.0.0.0
 - The bot now runs with Docker
