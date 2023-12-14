@@ -5,6 +5,7 @@
 
 bin/
 obj/
+build.bat
 
 
 # User-specific files
