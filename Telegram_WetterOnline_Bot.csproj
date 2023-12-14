@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -16,4 +17,9 @@
     <PackageReference Include="PuppeteerSharp" Version="12.0.0" />
     <PackageReference Include="Telegram.Bot" Version="16.0.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="IMAGES\Version 1.5.0.0\" />
+  </ItemGroup>
+
 </Project>
