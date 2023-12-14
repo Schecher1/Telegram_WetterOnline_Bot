@@ -101,7 +101,7 @@ namespace Telegram_WetterOnline_Bot.Core
                 using (var stream = new FileStream(pathToWidget, FileMode.Open))
                 {
                     string textMessage = $"Das sind die Wettervorhersagen für die nächsten drei Tage für {locationData.zipCode} {locationData.locationName} ({locationData.subStateID}) 🌤" + Environment.NewLine +
-                                         $"Heute ist der {DateTime.Today.ToString("dd.MM.yyyy")} 📅 um {DateTime.UtcNow.ToString("HH:mm")} Uhr 🕔" + Environment.NewLine +
+                                         $"Heute ist der {DateTime.Today.ToString("dd.MM.yyyy")} 📅 um {DateTime.Now.ToString("HH:mm")} Uhr 🕔" + Environment.NewLine +
                                          $"Für weitere Informationen besuchen Sie: {locationData.url}" + Environment.NewLine + Environment.NewLine +
                                          $"Angetrieben von WetterOnline & dem Entwickler @Schecher_1" + Environment.NewLine;
 
