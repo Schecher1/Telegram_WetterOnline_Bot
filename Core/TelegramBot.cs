@@ -67,6 +67,19 @@ namespace Telegram_WetterOnline_Bot.Core
                     return;
                 }
 
+                //catch the start command
+                if (e.Message.Text is "/start")
+                {
+                    await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "Hallo, ich bin der inoffizielle WetterOnline-Bot 🤖" + Environment.NewLine + Environment.NewLine +
+                                                                                          "Ich kann dir das Wetter für die nächsten drei Tage vorhersagen 🌤" + Environment.NewLine +
+                                                                                          "Dazu musst du mir nur deine Postleitzahl (oder den Namen) schicken 📬" + Environment.NewLine + Environment.NewLine +
+                                                                                          "Ich werde dir dann eine Liste mit Orten schicken, die zu deiner Postleitzahl passen 📝" + Environment.NewLine +
+                                                                                          "Wähle dann einfach den Ort aus, der zu dir passt 📍" + Environment.NewLine +
+                                                                                          "Ich werde dir dann eine Wettervorhersage für die nächsten drei Tage schicken 📅" + Environment.NewLine + Environment.NewLine +
+                                                                                          "Ich wünsche dir viel Spaß mit mir 🤗");
+                    return;
+                }
+
                 SendSuggest(sender, e);
             }
             catch (Exception ex)
