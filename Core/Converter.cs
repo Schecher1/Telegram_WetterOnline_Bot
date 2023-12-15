@@ -26,6 +26,7 @@ namespace Telegram_WetterOnline_Bot.Core
 
                 //goto a link
                 await page.GoToAsync(widgetUrl);
+                await page.WaitForNetworkIdleAsync();
 
                 // Your JavaScript code
                 var script = @"
