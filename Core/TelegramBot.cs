@@ -124,9 +124,9 @@ namespace Telegram_WetterOnline_Bot.Core
                 using (var stream = new FileStream(pathToWidget, FileMode.Open))
                 {
                     string textMessage = $"Das sind die Wettervorhersagen für die nächsten drei Tage für {locationData.zipCode} {locationData.locationName} ({locationData.subStateID}) 🌤" + Environment.NewLine +
-                                         $"Heute ist der {DateTime.Today.ToString("dd.MM.yyyy")} 📅 um {DateTime.Now.ToString("HH:mm")} Uhr 🕔" + Environment.NewLine +
+                                         $"Heute ist der {DateTime.Today.ToString("dd.MM.yyyy")} 📅 um {DateTime.Now.ToString("HH:mm")} Uhr 🕔" + Environment.NewLine + Environment.NewLine +
                                          $"Für weitere Informationen besuchen Sie: {locationData.url}" + Environment.NewLine + Environment.NewLine +
-                                         $"Angetrieben von WetterOnline & dem Entwickler @Schecher_1" + Environment.NewLine;
+                                         $"© Entwickler @Schecher_1" + Environment.NewLine;
 
                     await _client.SendPhotoAsync(ChatId, stream, textMessage);
                     Logger.Log(Logger.LogLevel.Successful, "TelegramBot", $"Send Widget to {ChatId}!");
@@ -194,7 +194,7 @@ namespace Telegram_WetterOnline_Bot.Core
             Logger.Log(Logger.LogLevel.Info, "Whitelist-System", $"One User wrote and was not on the Whitelist!    ID: {e.Message.Chat.Id}");
 
             _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id),
-                      $"Es tut mir leid, ich darf Sie nicht bedienen. " +
+                      $"Es tut mir leid, ich darf Sie nicht bedienen. " + Environment.NewLine +
                       $"Sie sind nicht auf meiner Whitelist. " +
                       $"Bitte kontaktieren Sie meinen Besitzer, damit er Sie hinzufügen kann! " + Environment.NewLine +
                       $"Mein Besitzer ist {EnvironmentVariable.TELEGRAMBOT_OWNER_NAME}" + Environment.NewLine +
