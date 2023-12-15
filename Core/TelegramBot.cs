@@ -189,16 +189,20 @@ namespace Telegram_WetterOnline_Bot.Core
             );
         }
 
-        public static void YouAreNotOnTheWhitelist(object? sender, MessageEventArgs e)
+        public static async void YouAreNotOnTheWhitelist(object? sender, MessageEventArgs e)
         {
             Logger.Log(Logger.LogLevel.Info, "Whitelist-System", $"One User wrote and was not on the Whitelist!    ID: {e.Message.Chat.Id}");
 
-            _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id),
-                      $"Es tut mir leid, ich darf Sie nicht bedienen. " + Environment.NewLine +
-                      $"Sie sind nicht auf meiner Whitelist. " +
-                      $"Bitte kontaktieren Sie meinen Besitzer, damit er Sie hinzufügen kann! " + Environment.NewLine +
-                      $"Mein Besitzer ist {EnvironmentVariable.TELEGRAMBOT_OWNER_NAME}" + Environment.NewLine +
-                      $"(Ihre ID: {e.Message.Chat.Id})");
+            await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "Hallo, ich bin der inoffizielle WetterOnline-Bot 🤖" + Environment.NewLine + Environment.NewLine +
+                                                          "Ich kann dir das Wetter für die nächsten drei Tage vorhersagen 🌤" + Environment.NewLine +
+                                                          "Dazu musst du mir nur deine Postleitzahl (oder den Namen) schicken 📬" + Environment.NewLine + Environment.NewLine +
+                                                          "Ich werde dir dann eine Liste mit Orten schicken, die zu deiner Postleitzahl passen 📝" + Environment.NewLine +
+                                                          "Wähle dann einfach den Ort aus, der zu dir passt 📍" + Environment.NewLine +
+                                                          "Ich werde dir dann eine Wettervorhersage für die nächsten drei Tage schicken 📅" + Environment.NewLine + Environment.NewLine + Environment.NewLine +
+                                                          "Aber leider haben wir ein Problem, ich darf Ihnen keine Wettervorhersage schicken, da Sie nicht auf der Whitelist stehen! 😔" + Environment.NewLine +
+                                                         $"Bitte kontaktieren Sie meinen Besitzer, damit er Sie hinzufügen kann! " + Environment.NewLine +
+                                                         $"Mein Besitzer ist {EnvironmentVariable.TELEGRAMBOT_OWNER_NAME}" + Environment.NewLine + Environment.NewLine +
+                                                        $"(Ihre ID: {e.Message.Chat.Id})");
         }
     }
 }
