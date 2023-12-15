@@ -12,7 +12,7 @@ namespace Telegram_WetterOnline_Bot.Core
             {
                 Headless = true,
                 ExecutablePath = "/usr/bin/google-chrome-stable",
-                Args = new[] { "--no-sandbox" } 
+                Args = new[] { "--no-sandbox" }
             };
 
             await new BrowserFetcher().DownloadAsync();
@@ -24,8 +24,20 @@ namespace Telegram_WetterOnline_Bot.Core
                     DeviceScaleFactor = 3
                 });
 
+                //goto a link
                 await page.GoToAsync(widgetUrl);
 
+                // Your JavaScript code
+                var script = @"
+                var aElement = document.querySelector('[rel=""nofollow""]');
+                var divElement = document.querySelector('div.content');
+                var backgroundImageUrl = aElement.style.backgroundImage;
+                divElement.style.backgroundImage = backgroundImageUrl;
+                ";
+
+                // Evaluate the script on the page
+                await page.EvaluateExpressionAsync(script);
+               
                 var screenshotOptions = new ScreenshotOptions
                 {
                     Type = ScreenshotType.Jpeg,
@@ -43,8 +55,7 @@ namespace Telegram_WetterOnline_Bot.Core
             }
             return outputPath;
         }
-
-
+        
         private static string GetTempFilePath()
         {
             string tempDirectory = Path.GetTempPath();
