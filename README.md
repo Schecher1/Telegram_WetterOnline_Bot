@@ -25,6 +25,9 @@ There are simple reasons, the bot does not need much and can be easily docked by
 ✔️ Optimized for docker<br/>
 
 ## Image:
+### Telegram Welcome:
+![Telegram-Whitelist](IMAGES/Version%202.1.1.0/Welcome.png)
+
 ### Telegram Whitelist:
 ![Telegram-Whitelist](IMAGES/Version%202.1.1.0/Whitelist.png)
 
