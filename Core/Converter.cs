@@ -29,11 +29,22 @@ namespace Telegram_WetterOnline_Bot.Core
                 await page.WaitForNetworkIdleAsync();
 
                 // Your JavaScript code
-                var script = @"
-                var aElement = document.querySelector('[rel=""nofollow""]');
-                var divElement = document.querySelector('div.content');
-                var backgroundImageUrl = aElement.style.backgroundImage;
-                divElement.style.backgroundImage = backgroundImageUrl;";
+                string script = @"
+                //move the background image to the div element (render porpose)
+                const aElement = document.querySelector('[rel=""nofollow""]');
+                const divElement = document.querySelector('div.content');
+                const backgroundImageUrl = aElement.style.backgroundImage;
+                divElement.style.backgroundImage = backgroundImageUrl;
+
+                 //remove the arrow element on the right side (optic porpose)
+                const footerElement = document.getElementsByClassName('arrow');
+                footerElement[0].remove();
+
+                //add a watermark to the image (just for fun) 
+                const footer = document.querySelector('footer');
+                footer.textContent = 'GitHub: Schecher1/Telegram_WetterOnline_Bot';
+                footer.style = 'margin-top:5px;';";
+
 
                 // Evaluate the script on the page
                 await page.EvaluateExpressionAsync(script);

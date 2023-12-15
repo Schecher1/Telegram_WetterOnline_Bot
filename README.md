@@ -72,6 +72,10 @@ docker run -d \
 
 # CHANGELOG
 
+## 2.1.1.0
+- FIX: The bot waits until the image is rendered before sending it to you
+- Quality and file size optimized
+
 ## 2.1.0.0
 - The Container will accept the Environment Variable "TZ" (TimeZone) now
 - The Container will now show the actual Time, not the UTC Time
