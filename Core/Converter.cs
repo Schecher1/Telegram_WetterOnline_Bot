@@ -21,7 +21,7 @@ namespace Telegram_WetterOnline_Bot.Core
             {
                 await page.SetViewportAsync(new ViewPortOptions
                 {
-                    DeviceScaleFactor = 3
+                    DeviceScaleFactor = 4,
                 });
 
                 //goto a link
