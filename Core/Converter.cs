@@ -32,8 +32,7 @@ namespace Telegram_WetterOnline_Bot.Core
                 var aElement = document.querySelector('[rel=""nofollow""]');
                 var divElement = document.querySelector('div.content');
                 var backgroundImageUrl = aElement.style.backgroundImage;
-                divElement.style.backgroundImage = backgroundImageUrl;
-                ";
+                divElement.style.backgroundImage = backgroundImageUrl;";
 
                 // Evaluate the script on the page
                 await page.EvaluateExpressionAsync(script);
