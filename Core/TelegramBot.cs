@@ -202,7 +202,8 @@ namespace Telegram_WetterOnline_Bot.Core
                                                           "Aber leider haben wir ein Problem, ich darf Ihnen keine Wettervorhersage schicken, da Sie nicht auf der Whitelist stehen! 😔" + Environment.NewLine +
                                                          $"Bitte kontaktieren Sie meinen Besitzer, damit er Sie hinzufügen kann! " + Environment.NewLine +
                                                          $"Mein Besitzer ist {EnvironmentVariable.TELEGRAMBOT_OWNER_NAME}" + Environment.NewLine + Environment.NewLine +
-                                                        $"(Ihre ID: {e.Message.Chat.Id})");
+                                                        $"(Ihre ID: {e.Message.Chat.Id})" + Environment.NewLine + Environment.NewLine +
+                                                        "Pscchhht... Wenn der Besitzer Sie nicht hinzufügen möchte, dann können Sie auch den Code auf GitHub herunterladen und mich selbst hosten! 🤫 (https://github.com/Schecher1/Telegram_WetterOnline_Bot)");
         }
     }
 }
