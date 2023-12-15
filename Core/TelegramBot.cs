@@ -100,7 +100,7 @@ namespace Telegram_WetterOnline_Bot.Core
             {
                 // Extract the suggest ID from the callback data
                 var nameOfLocation = callbackQuery.Data.Substring("choice_".Length);
-                LocationModel? locationData = WetterOnline.GetLocationData(nameOfLocation);
+                LocationModel locationData = WetterOnline.GetLocationData(nameOfLocation);
                 await SendWidget(locationData, chatId);
 
                 //delete the message (to keep the chat clean)
@@ -138,7 +138,7 @@ namespace Telegram_WetterOnline_Bot.Core
             }
         }
 
-        private async void SendSuggest(object? sender, Telegram.Bot.Args.MessageEventArgs e)
+        private async void SendSuggest(object? sender, MessageEventArgs e)
         {
             List<AutoSuggestModel>? suggests = WetterOnline.GetSuggestData(e.Message.Text);
 
@@ -189,7 +189,7 @@ namespace Telegram_WetterOnline_Bot.Core
             );
         }
 
-        public static void YouAreNotOnTheWhitelist(object? sender, Telegram.Bot.Args.MessageEventArgs e)
+        public static void YouAreNotOnTheWhitelist(object? sender, MessageEventArgs e)
         {
             Logger.Log(Logger.LogLevel.Info, "Whitelist-System", $"One User wrote and was not on the Whitelist!    ID: {e.Message.Chat.Id}");
 

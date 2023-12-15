@@ -8,12 +8,11 @@ namespace Telegram_WetterOnline_Bot.Core
         {
             string outputPath = GetTempFilePath();
 
-            // Specify the path to the Chrome executable and disable the sandbox
             var launchOptions = new LaunchOptions
             {
                 Headless = true,
-                ExecutablePath = "/usr/bin/google-chrome-stable", // Adjust the path based on your environment
-                Args = new[] { "--no-sandbox" } // Add the --no-sandbox flag
+                ExecutablePath = "/usr/bin/google-chrome-stable",
+                Args = new[] { "--no-sandbox" } 
             };
 
             await new BrowserFetcher().DownloadAsync();
@@ -25,10 +24,8 @@ namespace Telegram_WetterOnline_Bot.Core
                     DeviceScaleFactor = 3
                 });
 
-                //goto page
                 await page.GoToAsync(widgetUrl);
 
-                //set screenshot options
                 var screenshotOptions = new ScreenshotOptions
                 {
                     Type = ScreenshotType.Jpeg,
@@ -42,19 +39,17 @@ namespace Telegram_WetterOnline_Bot.Core
                     },
                     Quality = 100
                 };
-
                 await page.ScreenshotAsync(outputPath, screenshotOptions);
             }
-
             return outputPath;
         }
 
 
         private static string GetTempFilePath()
         {
-            string tempDirectory = System.IO.Path.GetTempPath();
-            string tempFileName = System.IO.Path.GetRandomFileName() + ".jpeg";
-            string tempFilePath = System.IO.Path.Combine(tempDirectory, tempFileName);
+            string tempDirectory = Path.GetTempPath();
+            string tempFileName = Path.GetRandomFileName() + ".jpeg";
+            string tempFilePath = Path.Combine(tempDirectory, tempFileName);
             return tempFilePath;
         }
     }
