@@ -8,12 +8,11 @@ namespace Telegram_WetterOnline_Bot.Core
         {
             string outputPath = GetTempFilePath();
 
-            // Specify the path to the Chrome executable and disable the sandbox
             var launchOptions = new LaunchOptions
             {
                 Headless = true,
-                ExecutablePath = "/usr/bin/google-chrome-stable", // Adjust the path based on your environment
-                Args = new[] { "--no-sandbox" } // Add the --no-sandbox flag
+                ExecutablePath = "/usr/bin/google-chrome-stable",
+                Args = new[] { "--no-sandbox" }
             };
 
             await new BrowserFetcher().DownloadAsync();
@@ -22,13 +21,34 @@ namespace Telegram_WetterOnline_Bot.Core
             {
                 await page.SetViewportAsync(new ViewPortOptions
                 {
-                    DeviceScaleFactor = 3
+                    DeviceScaleFactor = 4,
                 });
 
-                //goto page
+                //goto a link
                 await page.GoToAsync(widgetUrl);
+                await page.WaitForNetworkIdleAsync();
 
-                //set screenshot options
+                // Your JavaScript code
+                string script = @"
+                //move the background image to the div element (render porpose)
+                const aElement = document.querySelector('[rel=""nofollow""]');
+                const divElement = document.querySelector('div.content');
+                const backgroundImageUrl = aElement.style.backgroundImage;
+                divElement.style.backgroundImage = backgroundImageUrl;
+
+                 //remove the arrow element on the right side (optic porpose)
+                const footerElement = document.getElementsByClassName('arrow');
+                footerElement[0].remove();
+
+                //add a watermark to the image (just for fun) 
+                const footer = document.querySelector('footer');
+                footer.textContent = 'GitHub: Schecher1/Telegram_WetterOnline_Bot';
+                footer.style = 'margin-top:5px;';";
+
+
+                // Evaluate the script on the page
+                await page.EvaluateExpressionAsync(script);
+               
                 var screenshotOptions = new ScreenshotOptions
                 {
                     Type = ScreenshotType.Jpeg,
@@ -42,19 +62,16 @@ namespace Telegram_WetterOnline_Bot.Core
                     },
                     Quality = 100
                 };
-
                 await page.ScreenshotAsync(outputPath, screenshotOptions);
             }
-
             return outputPath;
         }
-
-
+        
         private static string GetTempFilePath()
         {
-            string tempDirectory = System.IO.Path.GetTempPath();
-            string tempFileName = System.IO.Path.GetRandomFileName() + ".jpeg";
-            string tempFilePath = System.IO.Path.Combine(tempDirectory, tempFileName);
+            string tempDirectory = Path.GetTempPath();
+            string tempFileName = Path.GetRandomFileName() + ".jpeg";
+            string tempFilePath = Path.Combine(tempDirectory, tempFileName);
             return tempFilePath;
         }
     }

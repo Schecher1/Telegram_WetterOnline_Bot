@@ -10,27 +10,22 @@
                     //just show debug logs if the program is in debug mode
                     if (!EnvironmentVariable.IS_DEBUG) return;
                     WriteLog(ConsoleColor.DarkGray, "Debug", logPrefix, logMessage);
-                    SaveLog(logLevel, logPrefix, logMessage);
                     WriteLogIntoFile("Debug", logPrefix, logMessage);
                     break;
                 case LogLevel.Info:
                     WriteLog(ConsoleColor.White, "Info", logPrefix, logMessage);
-                    SaveLog(logLevel, logPrefix, logMessage);
                     WriteLogIntoFile("Info", logPrefix, logMessage);
                     break;
                 case LogLevel.Successful:
                     WriteLog(ConsoleColor.Green, "Successful", logPrefix, logMessage);
-                    SaveLog(logLevel, logPrefix, logMessage);
                     WriteLogIntoFile("Successful", logPrefix, logMessage);
                     break;
                 case LogLevel.Warning:
                     WriteLog(ConsoleColor.DarkYellow, "Warning", logPrefix, logMessage);
-                    SaveLog(logLevel, logPrefix, logMessage);
                     WriteLogIntoFile("Warning", logPrefix, logMessage);
                     break;
                 case LogLevel.Error:                
                     WriteLog(ConsoleColor.Red, "Error", logPrefix, logMessage);
-                    SaveLog(logLevel, logPrefix, logMessage);
                     WriteLogIntoFile("Error", logPrefix, logMessage);
                     break;
             }
@@ -60,19 +55,6 @@
 
             //reset the font color to default
             Console.ResetColor();
-        }
-
-        private static void SaveLog(LogLevel logLevel, string logPrefix, string logMessage)
-        {
-            LogModel log = new LogModel()
-            {
-                LogLevel = logLevel,
-                Prefix = logPrefix,
-                Message = logMessage,
-                Date = DateTime.Now
-            };
-
-            EnvironmentVariable.SYSTEM_LOG.Add(log);
         }
 
         private async static void WriteLogIntoFile(string logLevelPrefix , string logPrefix, string logMessage)

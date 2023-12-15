@@ -40,7 +40,7 @@
                 return null;
 
             //Deserialize the edited json into the LocationModel
-            List<LocationModel>? locationData = JsonConvert.DeserializeObject<List<LocationModel>>(rawJson);
+            List<LocationModel> locationData = JsonConvert.DeserializeObject<List<LocationModel>>(rawJson);
 
             //Return the suggestData
             return locationData[0];

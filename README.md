@@ -25,14 +25,17 @@ There are simple reasons, the bot does not need much and can be easily docked by
 ✔️ Optimized for docker<br/>
 
 ## Image:
-### Telegram Whitelist:
-![Telegram-Whitelist](IMAGES/Version%202.0.0.0/Whitelist.png)
+### Welcome-Message:
+![Telegram-Whitelist](IMAGES/Version%202.1.1.0/Welcome.png)
 
-### Telegram Suggestion:
-![Telegram-Suggestion](IMAGES/Version%202.1.0.0/TelegramSuggestion.png)
+### Whitelist-Message:
+![Telegram-Whitelist](IMAGES/Version%202.1.1.0/Whitelist.png)
 
-### Telegram Weather Picture:
-![Telegram-Weather-Picture](IMAGES/Version%202.0.0.0/TelegramWeatherPicture.png)
+### Suggestion-Message:
+![Telegram-Suggestion](IMAGES/Version%202.1.1.0/TelegramSuggestion.png)
+
+### Weather Picture:
+![Telegram-Weather-Picture](IMAGES/Version%202.1.1.0/TelegramWeatherPicture.png)
 
 ### Logs:
 ![Console-Logs](IMAGES/Version%202.0.0.0/Console_DebugModeOff.png)
@@ -71,6 +74,10 @@ docker run -d \
 
 
 # CHANGELOG
+
+## 2.1.1.0
+- FIX: The bot waits until the image is rendered before sending it to you
+- Quality and file size optimized
 
 ## 2.1.0.0
 - The Container will accept the Environment Variable "TZ" (TimeZone) now

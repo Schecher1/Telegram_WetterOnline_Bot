@@ -1,7 +1,5 @@
-﻿using System.Threading;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Args;
-using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Telegram_WetterOnline_Bot.Core
@@ -49,7 +47,7 @@ namespace Telegram_WetterOnline_Bot.Core
             }
         }
 
-        private async void Client_OnMessage(object? sender, Telegram.Bot.Args.MessageEventArgs e)
+        private async void Client_OnMessage(object? sender, MessageEventArgs e)
         {
             try
             {
@@ -70,6 +68,8 @@ namespace Telegram_WetterOnline_Bot.Core
                 //catch the start command
                 if (e.Message.Text is "/start")
                 {
+                    Logger.Log(Logger.LogLevel.Info, "Telegram-Bot", $"The Message from {e.Message.Chat.Id} is /start!");
+                    
                     await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "Hallo, ich bin der inoffizielle WetterOnline-Bot 🤖" + Environment.NewLine + Environment.NewLine +
                                                                                           "Ich kann dir das Wetter für die nächsten drei Tage vorhersagen 🌤" + Environment.NewLine +
                                                                                           "Dazu musst du mir nur deine Postleitzahl (oder den Namen) schicken 📬" + Environment.NewLine + Environment.NewLine +
@@ -100,7 +100,7 @@ namespace Telegram_WetterOnline_Bot.Core
             {
                 // Extract the suggest ID from the callback data
                 var nameOfLocation = callbackQuery.Data.Substring("choice_".Length);
-                LocationModel? locationData = WetterOnline.GetLocationData(nameOfLocation);
+                LocationModel locationData = WetterOnline.GetLocationData(nameOfLocation);
                 await SendWidget(locationData, chatId);
 
                 //delete the message (to keep the chat clean)
@@ -124,9 +124,9 @@ namespace Telegram_WetterOnline_Bot.Core
                 using (var stream = new FileStream(pathToWidget, FileMode.Open))
                 {
                     string textMessage = $"Das sind die Wettervorhersagen für die nächsten drei Tage für {locationData.zipCode} {locationData.locationName} ({locationData.subStateID}) 🌤" + Environment.NewLine +
-                                         $"Heute ist der {DateTime.Today.ToString("dd.MM.yyyy")} 📅 um {DateTime.Now.ToString("HH:mm")} Uhr 🕔" + Environment.NewLine +
+                                         $"Heute ist der {DateTime.Today.ToString("dd.MM.yyyy")} 📅 um {DateTime.Now.ToString("HH:mm")} Uhr 🕔" + Environment.NewLine + Environment.NewLine +
                                          $"Für weitere Informationen besuchen Sie: {locationData.url}" + Environment.NewLine + Environment.NewLine +
-                                         $"Angetrieben von WetterOnline & dem Entwickler @Schecher_1" + Environment.NewLine;
+                                         $"© Entwickler @Schecher_1" + Environment.NewLine;
 
                     await _client.SendPhotoAsync(ChatId, stream, textMessage);
                     Logger.Log(Logger.LogLevel.Successful, "TelegramBot", $"Send Widget to {ChatId}!");
@@ -138,7 +138,7 @@ namespace Telegram_WetterOnline_Bot.Core
             }
         }
 
-        private async void SendSuggest(object? sender, Telegram.Bot.Args.MessageEventArgs e)
+        private async void SendSuggest(object? sender, MessageEventArgs e)
         {
             List<AutoSuggestModel>? suggests = WetterOnline.GetSuggestData(e.Message.Text);
 
@@ -189,16 +189,21 @@ namespace Telegram_WetterOnline_Bot.Core
             );
         }
 
-        public static void YouAreNotOnTheWhitelist(object? sender, Telegram.Bot.Args.MessageEventArgs e)
+        public static async void YouAreNotOnTheWhitelist(object? sender, MessageEventArgs e)
         {
             Logger.Log(Logger.LogLevel.Info, "Whitelist-System", $"One User wrote and was not on the Whitelist!    ID: {e.Message.Chat.Id}");
 
-            _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id),
-                      $"Es tut mir leid, ich darf Sie nicht bedienen. " +
-                      $"Sie sind nicht auf meiner Whitelist. " +
-                      $"Bitte kontaktieren Sie meinen Besitzer, damit er Sie hinzufügen kann! " + Environment.NewLine +
-                      $"Mein Besitzer ist {EnvironmentVariable.TELEGRAMBOT_OWNER_NAME}" + Environment.NewLine +
-                      $"(Ihre ID: {e.Message.Chat.Id})");
+            await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "Hallo, ich bin der inoffizielle WetterOnline-Bot 🤖" + Environment.NewLine + Environment.NewLine +
+                                                          "Ich kann dir das Wetter für die nächsten drei Tage vorhersagen 🌤" + Environment.NewLine +
+                                                          "Dazu musst du mir nur deine Postleitzahl (oder den Namen) schicken 📬" + Environment.NewLine + Environment.NewLine +
+                                                          "Ich werde dir dann eine Liste mit Orten schicken, die zu deiner Postleitzahl passen 📝" + Environment.NewLine +
+                                                          "Wähle dann einfach den Ort aus, der zu dir passt 📍" + Environment.NewLine +
+                                                          "Ich werde dir dann eine Wettervorhersage für die nächsten drei Tage schicken 📅" + Environment.NewLine + Environment.NewLine + Environment.NewLine +
+                                                          "Aber leider haben wir ein Problem, ich darf Ihnen keine Wettervorhersage schicken, da Sie nicht auf der Whitelist stehen! 😔" + Environment.NewLine +
+                                                         $"Bitte kontaktieren Sie meinen Besitzer, damit er Sie hinzufügen kann! " + Environment.NewLine +
+                                                         $"Mein Besitzer ist {EnvironmentVariable.TELEGRAMBOT_OWNER_NAME}" + Environment.NewLine + Environment.NewLine +
+                                                        $"(Ihre ID: {e.Message.Chat.Id})" + Environment.NewLine + Environment.NewLine +
+                                                        "Pscchhht... Wenn der Besitzer Sie nicht hinzufügen möchte, dann können Sie auch den Code auf GitHub herunterladen und mich selbst hosten! 🤫 (https://github.com/Schecher1/Telegram_WetterOnline_Bot)");
         }
     }
 }

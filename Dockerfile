@@ -44,7 +44,5 @@ RUN chown -R worker:worker /app
 # Switch to user
 USER worker
 
-
-
 # Set up entry point with the Bash script
 ENTRYPOINT ["dotnet", "Telegram_WetterOnline_Bot.dll"]
