@@ -1,7 +1,5 @@
-﻿using System.Threading;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Args;
-using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Telegram_WetterOnline_Bot.Core
@@ -49,7 +47,7 @@ namespace Telegram_WetterOnline_Bot.Core
             }
         }
 
-        private async void Client_OnMessage(object? sender, Telegram.Bot.Args.MessageEventArgs e)
+        private async void Client_OnMessage(object? sender, MessageEventArgs e)
         {
             try
             {
@@ -70,6 +68,8 @@ namespace Telegram_WetterOnline_Bot.Core
                 //catch the start command
                 if (e.Message.Text is "/start")
                 {
+                    Logger.Log(Logger.LogLevel.Info, "Telegram-Bot", $"The Message from {e.Message.Chat.Id} is /start!");
+                    
                     await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "Hallo, ich bin der inoffizielle WetterOnline-Bot 🤖" + Environment.NewLine + Environment.NewLine +
                                                                                           "Ich kann dir das Wetter für die nächsten drei Tage vorhersagen 🌤" + Environment.NewLine +
                                                                                           "Dazu musst du mir nur deine Postleitzahl (oder den Namen) schicken 📬" + Environment.NewLine + Environment.NewLine +
