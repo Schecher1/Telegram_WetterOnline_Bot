@@ -1,5 +1,6 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Args;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Telegram_WetterOnline_Bot.Core
@@ -80,6 +81,48 @@ namespace Telegram_WetterOnline_Bot.Core
                     return;
                 }
 
+                //catch the time event command
+                if (e.Message.Text.ToLower().Contains("/settimer"))
+                {
+                    if (e.Message.Text.ToLower() == "/settimer")
+                    {
+                        await _client.SendTextMessageAsync(e.Message.Chat.Id, "Freut mich, dass ich dich jeden Tag um einer bestimmten Uhrzeit an das Wetter erinnern darf 🤗" + Environment.NewLine +
+                                                                              "Dazu musst du mir nur die Uhrzeit schicken, zu der ich dich erinnern soll ⏰" + Environment.NewLine +
+                                                                              "und du musst mir schreiben, von was für ein Ort du es gerne hättest." + Environment.NewLine + Environment.NewLine +
+                                                                              "Beispiel: /setTimer 12:00==Berlin" + Environment.NewLine + Environment.NewLine +
+                                                                              "Ich werde dich dann jeden Tag um 12:00 Uhr an das Wetter in Berlin erinnern 🌤");
+                        return;
+                    }
+
+                    if (!e.Message.Text.Contains("=="))
+                    {
+                        await _client.SendTextMessageAsync(e.Message.Chat.Id, "Es ist ein Fehler aufgetreten, Ihre Eingabe war falsch");
+                        return;
+                    }
+
+                    string time = e.Message.Text.Replace("/setTimer", "").Trim().Split("==")[0];
+                    string location = e.Message.Text.Replace("/setTimer", "").Trim().Split("==")[1];
+                    LocationModel? locationModel = WetterOnline.GetLocationData(location);
+                    string locationName = locationModel?.locationName ?? "";
+
+                    var inlineKeyboard = new InlineKeyboardMarkup(new[]
+                    {
+                        new[]
+                        {
+                            InlineKeyboardButton.WithCallbackData("Ja, passt!", $"setTimerYes_{time}=={location}"),
+                            InlineKeyboardButton.WithCallbackData("Oh nein, passt nicht", "setTimerNo")
+                        },
+                        new[]
+                        {
+                            InlineKeyboardButton.WithCallbackData("Schick mir bitte ein Beispiel Bild", $"setTimeSendTestImage_{locationName}")
+                        }
+                    });
+
+                    await _client.SendTextMessageAsync(e.Message.Chat.Id, "Habe ich das richtig verstanden?" + Environment.NewLine +
+                                                                          $"Du möchtest jeden Tag um {time} Uhr an das Wetter in {location} erinnert werden?", replyMarkup: inlineKeyboard);
+                    return;
+                }
+
                 SendSuggest(sender, e);
             }
             catch (Exception ex)
@@ -105,6 +148,36 @@ namespace Telegram_WetterOnline_Bot.Core
 
                 //delete the message (to keep the chat clean)
                 await _client.DeleteMessageAsync(chatId, callbackQuery.Message.MessageId);
+            }
+
+            if (callbackQuery.Data.StartsWith("setTimerYes_"))
+            {
+                int hour = Convert.ToInt32(callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0].Split(":")[0]);
+                int minute = Convert.ToInt32(callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0].Split(":")[1]);
+
+                TimerEventModel newEvent = new TimerEventModel()
+                {
+                    ChatId = chatId,
+                    Time = new TimeSpan(hour, minute, 0),
+                    Location = callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[1]
+                };
+                await _client.SendTextMessageAsync(chatId, $"Alles klar, ich werde dich um {callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0]} Uhr an das Wetter von {callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[1]} erinnern 🌤");
+                await _client.SendTextMessageAsync(chatId, JsonConvert.SerializeObject(newEvent, Formatting.Indented));
+                await _client.DeleteMessageAsync(chatId, callbackQuery.Message.MessageId);
+            }
+
+            if (callbackQuery.Data.StartsWith("setTimerNo"))
+            {
+                await _client.SendTextMessageAsync(chatId, "Dann versuche es doch nochmal, ich warte auf deine Eingabe 😊");
+                await _client.DeleteMessageAsync(chatId, callbackQuery.Message.MessageId);
+            }
+
+            if (callbackQuery.Data.StartsWith("setTimeSendTestImage_"))
+            {
+                // Extract the suggest ID from the callback data
+                var nameOfLocation = callbackQuery.Data.Substring("setTimeSendTestImage_".Length);
+                LocationModel locationData = WetterOnline.GetLocationData(nameOfLocation);
+                await SendWidget(locationData, chatId);
             }
         }
 
