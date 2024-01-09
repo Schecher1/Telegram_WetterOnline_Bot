@@ -23,6 +23,7 @@ There are simple reasons, the bot does not need much and can be easily docked by
 ✔️ With Docker Environment Variable<br/>
 ✔️ Weather data as a pretty picture<br/>
 ✔️ Optimized for docker<br/>
+✔️ Set a Weather Timer (e.g. every day at 8 o'clock from berlin)<br/>
 
 ## Image:
 ### Welcome-Message:
@@ -55,6 +56,7 @@ docker run -d \
   -e TELEGRAMBOT_OWNER_NAME=@Schecher_1 \
   -e TELEGRAM_ID_WHITELIST=000000000 \
   -e TZ=Europe/Berlin \
+  -v telegramWetterOnlineBot_01_data =/app/data \
   --restart=always \
   schecher/telegramwetteronlinebot:latest
 ```
@@ -74,6 +76,10 @@ docker run -d \
 
 
 # CHANGELOG
+
+## 2.2.0.0
+- The bot can now send you the weather data in events like every day at 8 o'clock
+- The bot stores the user data into a json file (/app/data) you can mount it or you can use the docker run template above
 
 ## 2.1.1.0
 - FIX: The bot waits until the image is rendered before sending it to you
