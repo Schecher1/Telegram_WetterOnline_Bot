@@ -2,6 +2,7 @@
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
+using Telegram_WetterOnline_Bot.Handler;
 
 namespace Telegram_WetterOnline_Bot.Core
 {
@@ -155,14 +156,14 @@ namespace Telegram_WetterOnline_Bot.Core
                 int hour = Convert.ToInt32(callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0].Split(":")[0]);
                 int minute = Convert.ToInt32(callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0].Split(":")[1]);
 
-                TimerEventModel newEvent = new TimerEventModel()
+                DataHandler.AddTimeEvent(new TimerEventModel()
                 {
                     ChatId = chatId,
                     Time = new TimeSpan(hour, minute, 0),
                     Location = callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[1]
-                };
+                });
+                
                 await _client.SendTextMessageAsync(chatId, $"Alles klar, ich werde dich um {callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0]} Uhr an das Wetter von {callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[1]} erinnern 🌤");
-                await _client.SendTextMessageAsync(chatId, JsonConvert.SerializeObject(newEvent, Formatting.Indented));
                 await _client.DeleteMessageAsync(chatId, callbackQuery.Message.MessageId);
             }
 
