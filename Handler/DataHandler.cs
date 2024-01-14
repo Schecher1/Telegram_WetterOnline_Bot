@@ -8,7 +8,7 @@ namespace Telegram_WetterOnline_Bot.Handler
 {
     public class DataHandler
     {
-        private const string JSON_PATH = @".\Data\";
+        private const string JSON_PATH = @"./data/";
         private const string JSON_FILE = "metaData.json";
         private static List<TimerEventModel> _events = new List<TimerEventModel>();
 

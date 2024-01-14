@@ -24,6 +24,9 @@ namespace Telegram_WetterOnline_Bot.Core
 
             //the function is always called when he has received a callback
             _client.OnCallbackQuery += OnCallbackQueryReceived;
+
+            //start the task, which checks every minute if a message should be sent (time event)
+            new TimeEventHandler(this);
         }
 
         public void StartRM()
@@ -182,7 +185,7 @@ namespace Telegram_WetterOnline_Bot.Core
             }
         }
 
-        private async Task SendWidget(LocationModel locationData, long ChatId)
+        public async Task SendWidget(LocationModel locationData, long ChatId)
         {
             try
             {
