@@ -104,8 +104,8 @@ namespace Telegram_WetterOnline_Bot.Core
                         return;
                     }
 
-                    string time = e.Message.Text.Replace("/setTimer", "").Trim().Split("==")[0];
-                    string location = e.Message.Text.Replace("/setTimer", "").Trim().Split("==")[1];
+                    string time = e.Message.Text.ToLower().Replace("/settimer", "").Trim().Split("==")[0];
+                    string location = e.Message.Text.ToLower().Replace("/settimer", "").Trim().Split("==")[1];
                     LocationModel? locationModel = WetterOnline.GetLocationData(location);
                     string locationName = locationModel?.locationName ?? "";
 
@@ -124,6 +124,13 @@ namespace Telegram_WetterOnline_Bot.Core
 
                     await _client.SendTextMessageAsync(e.Message.Chat.Id, "Habe ich das richtig verstanden?" + Environment.NewLine +
                                                                           $"Du möchtest jeden Tag um {time} Uhr an das Wetter in {location} erinnert werden?", replyMarkup: inlineKeyboard);
+                    return;
+                }
+
+                //catch every message that is not a command but starts with a /
+                if (e.Message.Text.StartsWith("/"))
+                {
+                    await _client.SendTextMessageAsync(e.Message.Chat.Id, "Ihr Befehl ist mir nicht bekannt 🤔");
                     return;
                 }
 
