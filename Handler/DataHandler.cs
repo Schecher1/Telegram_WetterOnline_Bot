@@ -55,12 +55,20 @@
         }
 
         //means that he returns a list of events that are due (max 2 minute in past)
-        public static List<TimerEventModel> GetJobs()
+        public static List<TimerEventModel> GetDueJobs()
         {
             CheckWorkDir();
             LoadAllEvents();
 
             return _events.Where(x => x.IsDue()).ToList();
+        }
+
+        public static List<TimerEventModel> GetAllJobs(long chatId)
+        {
+            CheckWorkDir();
+            LoadAllEvents();
+
+            return _events.Where(x => x.ChatId == chatId).ToList();
         }
 
         internal static void UpdateLastSend(Guid id)
@@ -70,6 +78,24 @@
 
             _events.Find(x => x.Id == id).LastSend = DateTime.Now;
             SaveChanges();
+        }
+
+        internal static bool CheckOwner(long chatId, Guid jobId)
+        {
+            CheckWorkDir();
+            LoadAllEvents();
+
+            try
+            {
+                Console.WriteLine(chatId);
+                Console.WriteLine(jobId);
+                return _events.Find(x => x.Id == jobId).ChatId == chatId;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
         }
     }
 }

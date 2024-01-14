@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Bot;
-
-namespace Telegram_WetterOnline_Bot.Handler
+﻿namespace Telegram_WetterOnline_Bot.Handler
 {
     public class TimeEventHandler
     {
         const int DELAY = 1000; //in milliseconds
         public TimeEventHandler(TelegramBot __telegramBotClass)
         {
-            Console.WriteLine("init");
+            Logger.Log(Logger.LogLevel.Info, "TimeEventHandler", "Event Task started");
             Task.Run(() => EventTask(__telegramBotClass));
         }
 
@@ -24,7 +17,7 @@ namespace Telegram_WetterOnline_Bot.Handler
                 Task.Delay(DELAY).Wait();
 
                 //get all tasks that are due
-                List<TimerEventModel> tasks = DataHandler.GetJobs();
+                List<TimerEventModel> tasks = DataHandler.GetDueJobs();
 
                 //continue if there are no tasks
                 if (tasks.Count is 0) 

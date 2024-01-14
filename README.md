@@ -35,6 +35,9 @@ You just have to send your location as a message and he will send you the weathe
 ### ```/setTimer 14:00==Berlin```
 Sends you the weather data for Berlin every day at 14:00 (12pm)
 
+### ```/deleteTimer```
+Shows you a list of all your timer events, which you can delete.
+
 ## Image:
 ### Welcome-Message:
 ![Telegram-Whitelist](IMAGES/Version%202.1.1.0/Welcome.png)
