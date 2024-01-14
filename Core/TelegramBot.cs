@@ -330,7 +330,8 @@ namespace Telegram_WetterOnline_Bot.Core
             {
                 var button = new InlineKeyboardButton
                 {
-                    Text = $"{job.Time.Hours}:{job.Time.Minutes} Uhr - {job.Location.Substring(0, 1).ToUpper() + job.Location.Substring(1)}",
+                    //shows the time and the location of the timer with 2 zeros in front of the hour if the hour is smaller than 10
+                    Text = $"{(job.Time.Hours < 10 ? "0" : "")}{job.Time.Hours}:{(job.Time.Minutes < 10 ? "0" : "")}{job.Time.Minutes}=={job.Location}",
                     CallbackData = $"deleteTimer_{job.Id}"
                 };
 
