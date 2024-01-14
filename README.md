@@ -25,6 +25,16 @@ There are simple reasons, the bot does not need much and can be easily docked by
 ✔️ Optimized for docker<br/>
 ✔️ Set a Weather Timer (e.g. every day at 8 o'clock from berlin)<br/>
 
+## Commands:
+### ```/start```
+The bot welcomes you and explains itself very shortly and if you are not yet on the whitelist, it sends you your chat ID.
+
+### ```Berlin```
+You just have to send your location as a message and he will send you the weather data, and if he couldn't find anything or more he will send you a selection
+
+### ```/setTimer 14:00==Berlin```
+Sends you the weather data for Berlin every day at 14:00 (12pm)
+
 ## Image:
 ### Welcome-Message:
 ![Telegram-Whitelist](IMAGES/Version%202.1.1.0/Welcome.png)
