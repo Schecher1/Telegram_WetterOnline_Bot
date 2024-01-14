@@ -364,8 +364,6 @@ namespace Telegram_WetterOnline_Bot.Core
             DataHandler.RemoveUser(e.Message.Chat.Id);
 
             await _client.SendTextMessageAsync(e.Message.Chat.Id, "Ihre Daten wurden alle gelöscht! 😢" + Environment.NewLine +
-                                                                  "Wenn Sie den Bot wieder nutzen möchten, müssen Sie ihn neu starten." + Environment.NewLine +
-                                                                  "Dazu müssen Sie nur /start schreiben." + Environment.NewLine + Environment.NewLine +
                                                                   "Ich hoffe, ich konnte Ihnen helfen 🤗");
         }
 
