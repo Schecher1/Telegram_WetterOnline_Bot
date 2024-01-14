@@ -2,7 +2,7 @@
 {
     public class EnvironmentVariable
     {
-        public static readonly string SYSTEM_VERSION = "2.1.1.0";
+        public static readonly string SYSTEM_VERSION = "2.2.1.0";
         public static string TELEGRAM_API_TOKEN { get; set; } = String.Empty;
         public static string TELEGRAMBOT_OWNER_NAME { get; set; } = String.Empty;
         public static int[] TELEGRAM_ID_WHITELIST { get; set; } = new int[0];

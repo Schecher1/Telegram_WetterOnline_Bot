@@ -79,6 +79,15 @@
             _events.Find(x => x.Id == id).LastSend = DateTime.Now;
             SaveChanges();
         }
+        
+        public static void RemoveUser(long id)
+        {
+            CheckWorkDir();
+            LoadAllEvents();
+
+            _events.RemoveAll(x => x.ChatId == id);
+            SaveChanges();
+        }
 
         internal static bool CheckOwner(long chatId, Guid jobId)
         {
@@ -87,15 +96,12 @@
 
             try
             {
-                Console.WriteLine(chatId);
-                Console.WriteLine(jobId);
                 return _events.Find(x => x.Id == jobId).ChatId == chatId;
             }
             catch (Exception)
             {
                 return false;
             }
-            
         }
     }
 }

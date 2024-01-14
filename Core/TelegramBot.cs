@@ -73,24 +73,34 @@ namespace Telegram_WetterOnline_Bot.Core
                 switch (e.Message.Text.ToLower())
                 {
                     case "/start":
-                        TBC_Start(sender, e);
+                        await TBC_Start(sender, e);
                         break;
 
                     case string s when s.Contains("/settimer"):
-                        TBC_SetTimer(sender, e);
+                        await TBC_SetTimer(sender, e);
                         break;
 
                     case "/deletetimer":
                     case "/deltimer":
-                        TBC_DeleteTimer(sender, e);
+                        await TBC_DeleteTimer(sender, e);
+                        break;
+
+                    case "/hilfe":
+                    case "/?":
+                    case "/help":
+                        await TBC_Help(sender, e);
+                        break;
+
+                    case "/stop":
+                        await TBC_Stop(sender, e);
                         break;
 
                     case string s when s.Contains('/'):
-                        TBC_UnknownCommand(sender, e);
+                        await TBC_UnknownCommand(sender, e);
                         break;
 
                     default:
-                        SendSuggest(sender, e);
+                        await SendSuggest(sender, e);
                         break;
                 }
             }
@@ -207,7 +217,7 @@ namespace Telegram_WetterOnline_Bot.Core
             }
         }
 
-        private async void SendSuggest(object? sender, MessageEventArgs e)
+        private async Task SendSuggest(object? sender, MessageEventArgs e)
         {
             List<AutoSuggestModel>? suggests = WetterOnline.GetSuggestData(e.Message.Text);
 
@@ -260,7 +270,7 @@ namespace Telegram_WetterOnline_Bot.Core
         
 
         #region TelegramBotCommands
-        private async void TBC_Start(object? sender, MessageEventArgs e)
+        private async Task TBC_Start(object? sender, MessageEventArgs e)
         {
             Logger.Log(Logger.LogLevel.Info, "Telegram-Bot", $"The Message from {e.Message.Chat.Id} is /start!");
 
@@ -273,7 +283,7 @@ namespace Telegram_WetterOnline_Bot.Core
                                                                                   "Ich wünsche dir viel Spaß mit mir 🤗");
         }
 
-        private async void TBC_SetTimer(object? sender, MessageEventArgs e)
+        private async Task TBC_SetTimer(object? sender, MessageEventArgs e)
         {
             if (e.Message.Text.ToLower() == "/settimer")
             {
@@ -313,14 +323,15 @@ namespace Telegram_WetterOnline_Bot.Core
                                                                   $"Du möchtest jeden Tag um {time} Uhr an das Wetter in {location} erinnert werden?", replyMarkup: inlineKeyboard);
         }
 
-        private async void TBC_DeleteTimer(object? sender, MessageEventArgs e)
+        private async Task TBC_DeleteTimer(object? sender, MessageEventArgs e)
         {
             List<List<InlineKeyboardButton>> keyboardButtons = new List<List<InlineKeyboardButton>>();
             foreach (var job in DataHandler.GetAllJobs(e.Message.Chat.Id))
             {
                 var button = new InlineKeyboardButton
                 {
-                    Text = $"{job.Time.Hours}:{job.Time.Minutes} Uhr - {job.Location}",
+                    //shows the time and the location of the timer with 2 zeros in front of the hour if the hour is smaller than 10
+                    Text = $"[{(job.Time.Hours < 10 ? "0" : "")}{job.Time.Hours}:{(job.Time.Minutes < 10 ? "0" : "")}{job.Time.Minutes}] {job.Location}",
                     CallbackData = $"deleteTimer_{job.Id}"
                 };
 
@@ -336,7 +347,28 @@ namespace Telegram_WetterOnline_Bot.Core
             );
         }
 
-        private async void TBC_UnknownCommand(object? sender, MessageEventArgs e)
+        private async Task TBC_Help(object? sender, MessageEventArgs e)
+        {
+            await _client.SendTextMessageAsync(e.Message.Chat.Id, "Hier ist eine Liste von Befehlen, die ich verstehe:" + Environment.NewLine + Environment.NewLine +
+                                                                  "/start - Startet den Bot (sendet die Begrüßung)" + Environment.NewLine +
+                                                                  "Berlin - Schickt dir das Wetter von Berlin für die nächsten drei Tage (Bild + Link)" + Environment.NewLine +
+                                                                  "/setTimer - Erstellt einen Timer (sendet die Anleitung)" + Environment.NewLine +
+                                                                  "/deleteTimer - Löscht einen Timer (sendet die Liste mit den Timers)" + Environment.NewLine +
+                                                                  "/stop - Stoppt den Bot und löscht all deine Daten! (Entscheidung ist Permament)" + Environment.NewLine + 
+                                                                  "/help - Zeigt diese Liste an" + Environment.NewLine +
+                                                                  "/? - Zeigt diese Liste an" + Environment.NewLine +
+                                                                  "/hilfe - Zeigt diese Liste an" + Environment.NewLine);
+        }
+
+        private async Task TBC_Stop(object? sender, MessageEventArgs e)
+        {
+            DataHandler.RemoveUser(e.Message.Chat.Id);
+
+            await _client.SendTextMessageAsync(e.Message.Chat.Id, "Ihre Daten wurden alle gelöscht! 😢" + Environment.NewLine +
+                                                                  "Ich hoffe, ich konnte Ihnen helfen 🤗");
+        }
+
+        private async Task TBC_UnknownCommand(object? sender, MessageEventArgs e)
         {
             await _client.SendTextMessageAsync(e.Message.Chat.Id, "Ihr Befehl ist mir nicht bekannt 🤔");
         }

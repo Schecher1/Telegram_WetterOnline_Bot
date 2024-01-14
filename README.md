@@ -38,6 +38,9 @@ Sends you the weather data for Berlin every day at 14:00 (2pm)
 ### ```/deleteTimer```
 Shows you a list of all your timer events, which you can delete.
 
+### ```/help /? /hilfe```
+Shows you all the commands
+
 ## Image:
 ### Welcome-Message:
 ![Telegram-Whitelist](IMAGES/Version%202.1.1.0/Welcome.png)
@@ -89,6 +92,10 @@ docker run -d \
 
 
 # CHANGELOG
+
+## 2.2.1.0
+- Fix some Text Typos
+- Add /help /? /hilfe command to show the commands
 
 ## 2.2.0.0
 - The bot can now send you the weather data in events like every day at 8 o'clock
