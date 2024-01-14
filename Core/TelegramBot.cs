@@ -85,6 +85,12 @@ namespace Telegram_WetterOnline_Bot.Core
                         TBC_DeleteTimer(sender, e);
                         break;
 
+                    case "/hilfe":
+                    case "/?":
+                    case "/help":
+                        TBC_Help(sender, e);
+                        break;
+
                     case string s when s.Contains('/'):
                         TBC_UnknownCommand(sender, e);
                         break;
@@ -334,6 +340,19 @@ namespace Telegram_WetterOnline_Bot.Core
                 keyboardButtons.Count == 0 ? "Sie haben derzeitig keine Timer zum löschen" : "Hier ist eine Liste von Ihren Timern, die Sie löschen können:",
                 replyMarkup: inlineKeyboard
             );
+        }
+
+        private async void TBC_Help(object? sender, MessageEventArgs e)
+        {
+            await _client.SendTextMessageAsync(e.Message.Chat.Id, "Hier ist eine Liste von Befehlen, die ich verstehe:" + Environment.NewLine + Environment.NewLine +
+                                                                  "/start - Startet den Bot (sendet die Begrüßung)" + Environment.NewLine +
+                                                                  "Berlin - Schickt dir das Wetter von Berlin für die nächsten drei Tage (Bild + Link)" + Environment.NewLine +
+                                                                  "/setTimer - Erstellt einen Timer (sendet die Anleitung)" + Environment.NewLine +
+                                                                  "/deleteTimer - Löscht einen Timer (sendet die Liste mit den Timers)" + Environment.NewLine +
+                                                                  "/stop - Stoppt den Bot und löscht all deine Daten! (Entscheidung ist Permament)" + Environment.NewLine + Environment.NewLine +
+                                                                  "/help - Zeigt diese Liste an" + Environment.NewLine +
+                                                                  "/? - Zeigt diese Liste an" + Environment.NewLine +
+                                                                  "/hilfe - Zeigt diese Liste an" + Environment.NewLine);
         }
 
         private async void TBC_UnknownCommand(object? sender, MessageEventArgs e)
