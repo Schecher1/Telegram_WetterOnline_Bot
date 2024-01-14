@@ -9,8 +9,10 @@ namespace Telegram_WetterOnline_Bot.Handler
 {
     public class TimeEventHandler
     {
+        const int DELAY = 1000; //in milliseconds
         public TimeEventHandler(TelegramBot __telegramBotClass)
         {
+            Console.WriteLine("init");
             Task.Run(() => EventTask(__telegramBotClass));
         }
 
@@ -18,20 +20,23 @@ namespace Telegram_WetterOnline_Bot.Handler
         {
             for (; ; )
             {
+                //wait 1 second before checking again
+                Task.Delay(DELAY).Wait();
+
+                //get all tasks that are due
                 List<TimerEventModel> tasks = DataHandler.GetJobs();
 
+                //continue if there are no tasks
                 if (tasks.Count is 0) 
                     continue;
 
+                //send the widget to all chats that are due
                 foreach (TimerEventModel task in tasks)
                 {
-                    Console.WriteLine("try send");
-                    __telegramBotClass.SendWidget(WetterOnline.GetLocationData(task.Location), task.ChatId);     
+                    __telegramBotClass.SendWidget(WetterOnline.GetLocationData(task.Location), task.ChatId);
                     task.LastSend = DateTime.Now;
+                    DataHandler.UpdateLastSend(task.Id);
                 }
-                
-                Task.Delay(1000).Wait();
-                Console.WriteLine("tick");
             }
         }
     }

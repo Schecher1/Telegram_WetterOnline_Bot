@@ -156,18 +156,26 @@ namespace Telegram_WetterOnline_Bot.Core
 
             if (callbackQuery.Data.StartsWith("setTimerYes_"))
             {
-                int hour = Convert.ToInt32(callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0].Split(":")[0]);
-                int minute = Convert.ToInt32(callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0].Split(":")[1]);
-
-                DataHandler.AddTimeEvent(new TimerEventModel()
+                try
                 {
-                    ChatId = chatId,
-                    Time = new TimeSpan(hour, minute, 0),
-                    Location = callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[1]
-                });
-                
-                await _client.SendTextMessageAsync(chatId, $"Alles klar, ich werde dich um {callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0]} Uhr an das Wetter von {callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[1]} erinnern 🌤");
-                await _client.DeleteMessageAsync(chatId, callbackQuery.Message.MessageId);
+                    int hour = Convert.ToInt32(callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0].Split(":")[0]);
+                    int minute = Convert.ToInt32(callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0].Split(":")[1]);
+
+                    DataHandler.AddTimeEvent(new TimerEventModel()
+                    {
+                        Id = Guid.NewGuid(),
+                        ChatId = chatId,
+                        Time = new TimeSpan(hour, minute, 0),
+                        Location = callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[1]
+                    });
+
+                    await _client.SendTextMessageAsync(chatId, $"Alles klar, ich werde dich um {callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0]} Uhr an das Wetter von {callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[1]} erinnern 🌤");
+                    await _client.DeleteMessageAsync(chatId, callbackQuery.Message.MessageId);
+                }
+                catch (Exception)
+                {
+                    await _client.SendTextMessageAsync(chatId, "Es ist ein Fehler aufgetreten, Ihre Eingabe war falsch");
+                }
             }
 
             if (callbackQuery.Data.StartsWith("setTimerNo"))

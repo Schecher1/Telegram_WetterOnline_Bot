@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Telegram_WetterOnline_Bot.Handler
+﻿namespace Telegram_WetterOnline_Bot.Handler
 {
     public class DataHandler
     {
@@ -45,8 +39,8 @@ namespace Telegram_WetterOnline_Bot.Handler
         public static void AddTimeEvent(TimerEventModel newEvent)
         {
             CheckWorkDir();
-
             LoadAllEvents();
+            
             _events.Add(newEvent);
             SaveChanges();
         }
@@ -54,8 +48,8 @@ namespace Telegram_WetterOnline_Bot.Handler
         public static void RemoveTimeEvent(Guid id)
         {
             CheckWorkDir();
-
             LoadAllEvents();
+            
             _events.RemoveAll(x => x.Id == id);
             SaveChanges();
         }
@@ -67,6 +61,15 @@ namespace Telegram_WetterOnline_Bot.Handler
             LoadAllEvents();
 
             return _events.Where(x => x.IsDue()).ToList();
+        }
+
+        internal static void UpdateLastSend(Guid id)
+        {
+            CheckWorkDir();
+            LoadAllEvents();
+
+            _events.Find(x => x.Id == id).LastSend = DateTime.Now;
+            SaveChanges();
         }
     }
 }
