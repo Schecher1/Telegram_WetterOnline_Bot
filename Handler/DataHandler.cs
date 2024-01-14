@@ -96,15 +96,12 @@
 
             try
             {
-                Console.WriteLine(chatId);
-                Console.WriteLine(jobId);
                 return _events.Find(x => x.Id == jobId).ChatId == chatId;
             }
             catch (Exception)
             {
                 return false;
             }
-            
         }
     }
 }
