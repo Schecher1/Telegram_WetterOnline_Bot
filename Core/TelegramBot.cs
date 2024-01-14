@@ -22,6 +22,9 @@ namespace Telegram_WetterOnline_Bot.Core
 
             //the function is always called when he has received a callback
             _client.OnCallbackQuery += OnCallbackQueryReceived;
+
+            //start the task, which checks every minute if a message should be sent (time event)
+            _ = new TimeEventHandler(this);
         }
 
         public void StartRM()
@@ -46,6 +49,7 @@ namespace Telegram_WetterOnline_Bot.Core
                 Logger.Log(Logger.LogLevel.Error, "Telegram-Bot", ex.Message);
             }
         }
+        
 
         private async void Client_OnMessage(object? sender, MessageEventArgs e)
         {
@@ -65,22 +69,30 @@ namespace Telegram_WetterOnline_Bot.Core
                     return;
                 }
 
-                //catch the start command
-                if (e.Message.Text is "/start")
-                {
-                    Logger.Log(Logger.LogLevel.Info, "Telegram-Bot", $"The Message from {e.Message.Chat.Id} is /start!");
-                    
-                    await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "Hallo, ich bin der inoffizielle WetterOnline-Bot 🤖" + Environment.NewLine + Environment.NewLine +
-                                                                                          "Ich kann dir das Wetter für die nächsten drei Tage vorhersagen 🌤" + Environment.NewLine +
-                                                                                          "Dazu musst du mir nur deine Postleitzahl (oder den Namen) schicken 📬" + Environment.NewLine + Environment.NewLine +
-                                                                                          "Ich werde dir dann eine Liste mit Orten schicken, die zu deiner Postleitzahl passen 📝" + Environment.NewLine +
-                                                                                          "Wähle dann einfach den Ort aus, der zu dir passt 📍" + Environment.NewLine +
-                                                                                          "Ich werde dir dann eine Wettervorhersage für die nächsten drei Tage schicken 📅" + Environment.NewLine + Environment.NewLine +
-                                                                                          "Ich wünsche dir viel Spaß mit mir 🤗");
-                    return;
-                }
 
-                SendSuggest(sender, e);
+                switch (e.Message.Text.ToLower())
+                {
+                    case "/start":
+                        TBC_Start(sender, e);
+                        break;
+
+                    case string s when s.Contains("/settimer"):
+                        TBC_SetTimer(sender, e);
+                        break;
+
+                    case "/deletetimer":
+                    case "/deltimer":
+                        TBC_DeleteTimer(sender, e);
+                        break;
+
+                    case string s when s.Contains('/'):
+                        TBC_UnknownCommand(sender, e);
+                        break;
+
+                    default:
+                        SendSuggest(sender, e);
+                        break;
+                }
             }
             catch (Exception ex)
             {
@@ -106,9 +118,66 @@ namespace Telegram_WetterOnline_Bot.Core
                 //delete the message (to keep the chat clean)
                 await _client.DeleteMessageAsync(chatId, callbackQuery.Message.MessageId);
             }
-        }
 
-        private async Task SendWidget(LocationModel locationData, long ChatId)
+            if (callbackQuery.Data.StartsWith("setTimerYes_"))
+            {
+                try
+                {
+                    int hour = Convert.ToInt32(callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0].Split(":")[0]);
+                    int minute = Convert.ToInt32(callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0].Split(":")[1]);
+
+                    DataHandler.AddTimeEvent(new TimerEventModel()
+                    {
+                        Id = Guid.NewGuid(),
+                        ChatId = chatId,
+                        Time = new TimeSpan(hour, minute, 0),
+                        Location = callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[1]
+                    });
+
+                    await _client.SendTextMessageAsync(chatId, $"Alles klar, ich werde dich um {callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[0]} Uhr an das Wetter von {callbackQuery.Data.Replace("setTimerYes_", "").Split("==")[1]} erinnern 🌤");
+                    await _client.DeleteMessageAsync(chatId, callbackQuery.Message.MessageId);
+                }
+                catch (Exception)
+                {
+                    await _client.SendTextMessageAsync(chatId, "Es ist ein Fehler aufgetreten, Ihre Eingabe war falsch");
+                }
+            }
+
+            if (callbackQuery.Data.StartsWith("setTimerNo"))
+            {
+                await _client.SendTextMessageAsync(chatId, "Dann versuche es doch nochmal, ich warte auf deine Eingabe 😊");
+                await _client.DeleteMessageAsync(chatId, callbackQuery.Message.MessageId);
+            }
+
+            if (callbackQuery.Data.StartsWith("deleteTimer_"))
+            {
+                // Extract the suggest ID from the callback data
+                var id = callbackQuery.Data.Substring("deleteTimer_".Length);
+                Guid jobId = Guid.TryParse(id, out Guid guid) ? guid : Guid.Empty;
+
+
+                if (jobId == Guid.Empty || !DataHandler.CheckOwner(chatId, jobId))
+                {
+                    await _client.SendTextMessageAsync(chatId, "Es ist ein Fehler aufgetreten, Ihre Eingabe war falsch");
+                    return;
+                }
+
+                DataHandler.RemoveTimeEvent(jobId);
+                await _client.SendTextMessageAsync(chatId, "Alles klar, ich habe den Timer gelöscht");
+                await _client.DeleteMessageAsync(chatId, callbackQuery.Message.MessageId);
+            }
+
+            if (callbackQuery.Data.StartsWith("setTimeSendTestImage_"))
+            {
+                // Extract the suggest ID from the callback data
+                var nameOfLocation = callbackQuery.Data.Substring("setTimeSendTestImage_".Length);
+                LocationModel locationData = WetterOnline.GetLocationData(nameOfLocation);
+                await SendWidget(locationData, chatId);
+            }
+        }
+        
+
+        public async Task SendWidget(LocationModel locationData, long ChatId)
         {
             try
             {
@@ -188,7 +257,92 @@ namespace Telegram_WetterOnline_Bot.Core
                 replyMarkup: inlineKeyboard
             );
         }
+        
 
+        #region TelegramBotCommands
+        private async void TBC_Start(object? sender, MessageEventArgs e)
+        {
+            Logger.Log(Logger.LogLevel.Info, "Telegram-Bot", $"The Message from {e.Message.Chat.Id} is /start!");
+
+            await _client.SendTextMessageAsync(Convert.ToInt32(e.Message.Chat.Id), "Hallo, ich bin der inoffizielle WetterOnline-Bot 🤖" + Environment.NewLine + Environment.NewLine +
+                                                                                  "Ich kann dir das Wetter für die nächsten drei Tage vorhersagen 🌤" + Environment.NewLine +
+                                                                                  "Dazu musst du mir nur deine Postleitzahl (oder den Namen) schicken 📬" + Environment.NewLine + Environment.NewLine +
+                                                                                  "Ich werde dir dann eine Liste mit Orten schicken, die zu deiner Postleitzahl passen 📝" + Environment.NewLine +
+                                                                                  "Wähle dann einfach den Ort aus, der zu dir passt 📍" + Environment.NewLine +
+                                                                                  "Ich werde dir dann eine Wettervorhersage für die nächsten drei Tage schicken 📅" + Environment.NewLine + Environment.NewLine +
+                                                                                  "Ich wünsche dir viel Spaß mit mir 🤗");
+        }
+
+        private async void TBC_SetTimer(object? sender, MessageEventArgs e)
+        {
+            if (e.Message.Text.ToLower() == "/settimer")
+            {
+                await _client.SendTextMessageAsync(e.Message.Chat.Id, "Freut mich, dass ich dich jeden Tag um einer bestimmten Uhrzeit an das Wetter erinnern darf 🤗" + Environment.NewLine +
+                                                                      "Dazu musst du mir nur die Uhrzeit schicken, zu der ich dich erinnern soll ⏰" + Environment.NewLine +
+                                                                      "und du musst mir schreiben, von was für ein Ort du es gerne hättest." + Environment.NewLine + Environment.NewLine +
+                                                                      "Beispiel: /setTimer 12:00==Berlin" + Environment.NewLine + Environment.NewLine +
+                                                                      "Ich werde dich dann jeden Tag um 12:00 Uhr an das Wetter in Berlin erinnern 🌤");
+                return;
+            }
+
+            if (!e.Message.Text.Contains("=="))
+            {
+                await _client.SendTextMessageAsync(e.Message.Chat.Id, "Es ist ein Fehler aufgetreten, Ihre Eingabe war falsch");
+                return;
+            }
+
+            string time = e.Message.Text.ToLower().Replace("/settimer", "").Trim().Split("==")[0];
+            string location = e.Message.Text.ToLower().Replace("/settimer", "").Trim().Split("==")[1];
+            LocationModel? locationModel = WetterOnline.GetLocationData(location);
+            string locationName = locationModel?.locationName ?? "";
+
+            var inlineKeyboard = new InlineKeyboardMarkup(new[]
+            {
+                        new[]
+                        {
+                            InlineKeyboardButton.WithCallbackData("Ja, passt!", $"setTimerYes_{time}=={location}"),
+                            InlineKeyboardButton.WithCallbackData("Oh nein, passt nicht", "setTimerNo")
+                        },
+                        new[]
+                        {
+                            InlineKeyboardButton.WithCallbackData("Schick mir bitte ein Beispiel Bild", $"setTimeSendTestImage_{locationName}")
+                        }
+                    });
+
+            await _client.SendTextMessageAsync(e.Message.Chat.Id, "Habe ich das richtig verstanden?" + Environment.NewLine +
+                                                                  $"Du möchtest jeden Tag um {time} Uhr an das Wetter in {location} erinnert werden?", replyMarkup: inlineKeyboard);
+        }
+
+        private async void TBC_DeleteTimer(object? sender, MessageEventArgs e)
+        {
+            List<List<InlineKeyboardButton>> keyboardButtons = new List<List<InlineKeyboardButton>>();
+            foreach (var job in DataHandler.GetAllJobs(e.Message.Chat.Id))
+            {
+                var button = new InlineKeyboardButton
+                {
+                    Text = $"{job.Time.Hours}:{job.Time.Minutes} Uhr - {job.Location}",
+                    CallbackData = $"deleteTimer_{job.Id}"
+                };
+
+                keyboardButtons.Add(new List<InlineKeyboardButton> { button });
+            }
+
+            var inlineKeyboard = new InlineKeyboardMarkup(keyboardButtons);
+
+            await _client.SendTextMessageAsync(
+                Convert.ToInt32(e.Message.Chat.Id),
+                keyboardButtons.Count == 0 ? "Sie haben derzeitig keine Timer zum löschen" : "Hier ist eine Liste von Ihren Timern, die Sie löschen können:",
+                replyMarkup: inlineKeyboard
+            );
+        }
+
+        private async void TBC_UnknownCommand(object? sender, MessageEventArgs e)
+        {
+            await _client.SendTextMessageAsync(e.Message.Chat.Id, "Ihr Befehl ist mir nicht bekannt 🤔");
+        }
+        #endregion
+
+        
         public static async void YouAreNotOnTheWhitelist(object? sender, MessageEventArgs e)
         {
             Logger.Log(Logger.LogLevel.Info, "Whitelist-System", $"One User wrote and was not on the Whitelist!    ID: {e.Message.Chat.Id}");
