@@ -353,7 +353,7 @@ namespace Telegram_WetterOnline_Bot.Core
                                                                   "Berlin - Schickt dir das Wetter von Berlin für die nächsten drei Tage (Bild + Link)" + Environment.NewLine +
                                                                   "/setTimer - Erstellt einen Timer (sendet die Anleitung)" + Environment.NewLine +
                                                                   "/deleteTimer - Löscht einen Timer (sendet die Liste mit den Timers)" + Environment.NewLine +
-                                                                  "/stop - Stoppt den Bot und löscht all deine Daten! (Entscheidung ist Permament)" + Environment.NewLine + Environment.NewLine +
+                                                                  "/stop - Stoppt den Bot und löscht all deine Daten! (Entscheidung ist Permament)" + Environment.NewLine + 
                                                                   "/help - Zeigt diese Liste an" + Environment.NewLine +
                                                                   "/? - Zeigt diese Liste an" + Environment.NewLine +
                                                                   "/hilfe - Zeigt diese Liste an" + Environment.NewLine);
