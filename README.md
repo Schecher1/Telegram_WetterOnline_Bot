@@ -33,7 +33,7 @@ The bot welcomes you and explains itself very shortly and if you are not yet on 
 You just have to send your location as a message and he will send you the weather data, and if he couldn't find anything or more he will send you a selection
 
 ### ```/setTimer 14:00==Berlin```
-Sends you the weather data for Berlin every day at 14:00 (12pm)
+Sends you the weather data for Berlin every day at 14:00 (2pm)
 
 ### ```/deleteTimer```
 Shows you a list of all your timer events, which you can delete.
